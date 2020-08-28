@@ -52,10 +52,10 @@ RSpec.describe Endpoint, type: :model do
       end
     end
 
-    context 'BRAND is not a documented brand' do
+    context 'CLIENT_TAG is not a documented' do
       it 'should raise error' do
-        brand = 'friggle_fraggle'
-        expect(FactoryBot.build(:endpoint, brand: brand)).to_not be_valid
+        client_tag = 'friggle_fraggle'
+        expect(FactoryBot.build(:endpoint, client_tag: client_tag)).to_not be_valid
       end
     end
 
@@ -159,13 +159,13 @@ RSpec.describe Endpoint, type: :model do
   end
 
   describe '#client' do
-    context 'when called with a brand that has been mapped to a client' do
+    context 'when called with a client_tag that has been mapped to a client' do
       it 'returns client for the brand' do
-        expect(endpoint.client).to be(CNUAPP_US_CLIENT)
+        expect(endpoint.client).to be(nil)
       end
     end
 
-    context 'when called with a brand that has not been mapped to a client' do
+    context 'when called with a client_tag that has not been mapped to a client' do
       it 'returns nil' do
         endpoint.brand = 'funnything'
         expect(endpoint.client).to be(nil)
