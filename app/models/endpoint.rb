@@ -15,7 +15,7 @@ class Endpoint < ApplicationRecord
 
   has_many :batches
 
-  CLIENT_MAP = { 'some_client' => 'not_nil' }
+  CLIENT_MAP = { 'some_client' => 'not_nil' }.freeze
 
   def url_variables
     url_path.split('/').select { |x| x.include?(':') }.map do |var|
