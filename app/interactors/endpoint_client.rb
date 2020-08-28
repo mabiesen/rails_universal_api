@@ -22,7 +22,7 @@ class EndpointClient
   private
 
   def request(method_symbol, url_path, extra_params)
-    @client.send(method_symbol) do |req|
+    @client.send(method_symbol, url_path) do |req|
       set_body(req, extra_params)
     end
   end
