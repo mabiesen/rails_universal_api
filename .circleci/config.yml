@@ -1,4 +1,20 @@
 version: 2.1
+
+install_bundler: &install_bundler
+  - run:
+      name: Install Bundler
+      command: gem install bundler
+
+run_spec_tests: &run_spec_tests
+  - run:
+      name: Run Spec Tests
+      command: bundle exec rspec
+
+run_rubocop: &run_rubocop
+  - run:
+      name: Run Rubocop
+      command: rake rubocop
+
 orbs:
   ruby: circleci/ruby@0.1.2 
 
@@ -9,7 +25,7 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - run:
-          name: Install Bundler 
-          command: gem install bundler
+      - *install_bundler
       - ruby/bundle-install
+      - *run_spec_tests
+      - *run_rubocop
