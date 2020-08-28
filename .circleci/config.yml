@@ -29,7 +29,7 @@ database_setup: &database_setup
 install_bundler: &install_bundler
   run:
     name: Install Bundler
-    command: gem install bundler -v '~> 2.0.2'
+    command: gem install bundler -v '>= 2.0.2'
 
 bundle_gems: &bundle_gems
   run:
@@ -44,7 +44,7 @@ run_spec_tests: &run_spec_tests
 run_rubocop: &run_rubocop
   run:
     name: Run Rubocop
-    command: rake rubocop
+    command: bundle exec rake rubocop
 
 jobs:
   build:
