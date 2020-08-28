@@ -1,0 +1,66 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.5
+
+db_docker: &db_docker
+  - image: circleci/ruby:2.6.0-stretch-node 
+    environment:
+      RAILS_ENV: test
+      RACK_ENV: test
+      PGHOST: 127.0.0.1
+  - image: circleci/postgres:10.4-alpine
+    environment:
+      POSTGRES_USER: postgres
+
+install_postgres_dependencies: &install_postgres_dependencies
+  run:
+    name: Install Postgres Dependencies
+    command: |
+      sudo apt-get update
+      sudo apt-get install -y libpq-dev libpq5 libmagic-dev
+      sudo apt-get install -y postgresql-client
+
+database_setup: &database_setup
+  run:
+    name: Database Setup
+    command: |
+      psql -h localhost -p 5432 -c 'create user circleci superuser' -U postgres
+      bundle exec rails db:create  RAILS_ENV=test
+      bundle exec rails db:schema:load --trace RAILS_ENV=test
+      echo 'db setup complete'
+
+install_bundler: &install_bundler
+  run:
+    name: Install Bundler
+    command: gem install bundler -v '>= 2.0.2'
+
+bundle_gems: &bundle_gems
+  run:
+    name: Bundle Gems
+    command: bundle install
+
+run_spec_tests: &run_spec_tests
+  run:
+    name: Run Spec Tests
+    command: bundle exec rspec
+
+run_rubocop: &run_rubocop
+  run:
+    name: Run Rubocop
+    command: bundle exec rake rubocop
+
+jobs:
+  build:
+    working_directory: ~/repo
+    docker: *db_docker
+    steps:
+      - checkout
+      - *install_postgres_dependencies
+      - *install_bundler
+      - *bundle_gems 
+      - *database_setup
+      - *run_spec_tests
+      - *run_rubocop
+      - codecov/upload:
+          file: coverage/coverage.xml

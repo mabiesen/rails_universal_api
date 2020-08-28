@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+#  redis:
+#    image: redis:alpine
+#    restart: always
+#    networks:
+#      - internal
+
+  database:
+    image: postgres:11-alpine
+    restart: always
+    volumes:
+      - rails_universal_api_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - internal
+
+  # redis requires a depends on
+  # redis requires a host
+  rails_universal_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - .:/rails_universal_api
+    ports:
+      - "3003:3003"
+    depends_on:
+      - database
+    networks:
+      - internal
+    environment:
+      - PGHOST=database
+      - PGUSER=postgres
+      - EXPOSE_PORT=3003
+
+#  sidekiq:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    entrypoint: [docker_entrypoints/sidekiq_entrypoint.sh]
+#    restart: always
+#    environment:
+#      - PGHOST=database
+#      - PGUSER=postgres
+#      - REDIS_HOST=redis://redis
+#    depends_on:
+#      - rails_universal_api
+#      - database
+#      - redis
+#    networks:
+#      - internal
+
+volumes:
+  rails_universal_api_data:
+
+networks:
+  internal:
+    driver: bridge
