@@ -24,13 +24,6 @@ RSpec.describe Endpoint, type: :model do
       end
     end
 
-    context "URL_PATH does not contain 'v' as second character" do
-      it 'should raise error on save' do
-        url_path = '/stuff/:things'
-        expect(FactoryBot.build(:endpoint, url_path: url_path)).to_not be_valid
-      end
-    end
-
     context 'URL_PATH ends in forward slash' do
       it 'should raise error on save' do
         url_path = '/v1/stuff/:things/'
