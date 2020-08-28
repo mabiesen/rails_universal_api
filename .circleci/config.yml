@@ -1,5 +1,31 @@
 version: 2.1
 
+db_docker: &db_docker
+  - image: circleci/ruby:2.6.0-stretch-node 
+    environment:
+      RAILS_ENV: test
+      RACK_ENV: test
+      PGHOST: 127.0.0.1
+  - image: circleci/postgres:10.4-alpine
+    environment:
+      POSTGRES_USER: postgres
+
+install_postgres_dependencies: &install_postgres_dependencies
+  run:
+    name: Install Postgres Dependencies
+    command: |
+      apt-get update
+      apt-get install -y libpq-dev libpq5 libmagic-dev
+      apt-get install -y postgresql-client
+
+database_setup: &database_setup
+  run:
+    name: Database Setup
+    command: |
+      #psql -h localhost -p 5432 -c 'create user shadow superuser' -U postgres
+      bundle exec rails db:create  RAILS_ENV=test
+      bundle exec rails db:schema:load --trace RAILS_ENV=test
+
 install_bundler: &install_bundler
   run:
     name: Install Bundler
@@ -15,17 +41,16 @@ run_rubocop: &run_rubocop
     name: Run Rubocop
     command: rake rubocop
 
-orbs:
-  ruby: circleci/ruby@0.1.2 
-
 jobs:
   build:
-    docker:
-      - image: circleci/ruby:2.6.0-stretch-node
+    working_directory: ~/repo
+    docker: *db_docker
     executor: ruby/default
     steps:
       - checkout
+      - *install_postgres_dependencies
       - *install_bundler
       - ruby/bundle-install
+      - *database_setup
       - *run_spec_tests
       - *run_rubocop
