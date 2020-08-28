@@ -161,13 +161,14 @@ RSpec.describe Endpoint, type: :model do
   describe '#client' do
     context 'when called with a client_tag that has been mapped to a client' do
       it 'returns client for the brand' do
-        expect(endpoint.client).to eq('not_nil')
+        expect(endpoint.client).to be_a(Faraday::Connection)
       end
     end
 
     context 'when called with a client_tag that has not been mapped to a client' do
       it 'returns nil' do
-        expect(endpoint.client).to eq('not_nil')
+        endpoint.client_tag = 'blah'
+        expect(endpoint.client).to eq(nil)
       end
     end
   end
