@@ -14,8 +14,6 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 
-require 'statsd-instrument'
-require 'simplecov'
 require 'webmock/rspec'
 
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -44,10 +42,6 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-
-  # Allow us to make sure we're testing StatsD functionality and
-  # Exporting metrics correctly
-  config.include StatsD::Instrument::Matchers
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards

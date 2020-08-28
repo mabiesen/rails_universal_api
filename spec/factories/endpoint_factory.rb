@@ -4,7 +4,7 @@ FactoryBot.define do
 
   factory :endpoint do
     name { 'test' }
-    client_tag { 'a_client' }
+    client_tag { 'some_client' }
     url_path { '/v1/test/:things' }
     params { {things: {optional: true, type: 'String'}} }
     request_method { 'post' }

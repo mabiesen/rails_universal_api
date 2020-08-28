@@ -15,6 +15,8 @@ class Endpoint < ApplicationRecord
 
   has_many :batches
 
+  CLIENT_MAP = { 'some_client' => 'not_nil' }
+
   def url_variables
     url_path.split('/').select { |x| x.include?(':') }.map do |var|
       var.delete(':')
@@ -22,9 +24,6 @@ class Endpoint < ApplicationRecord
   end
 
   def client
-    case brand
-    when 'some_brand'
-      nil
-    end
+    CLIENT_MAP[client_tag]
   end
 end

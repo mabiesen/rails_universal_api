@@ -29,9 +29,6 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  # Allow us to make sure we're testing StatsD functionality and
-  # Exporting metrics correctly
-  config.include StatsD::Instrument::Matchers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
