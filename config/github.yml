@@ -1,0 +1,14 @@
+default: &default
+  url: 'https://api.github.com'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+
+staging:
+  <<: *default
