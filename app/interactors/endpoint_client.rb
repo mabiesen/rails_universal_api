@@ -30,5 +30,4 @@ class EndpointClient
   def set_body(client_request, extra_params)
     client_request.body = extra_params.to_json
   end
-
 end
