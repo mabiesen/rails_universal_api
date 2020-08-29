@@ -14,7 +14,7 @@ class ApiController < ApplicationController
   def call
     if @endpoint.nil?
       error_string = "no endpoint was found: #{@client_tag} with request #{@request_name}"
-      render json: { error: error_string}, status: 404
+      render json: { error: error_string }, status: 404
     else
       response = make_request
       render json: { status: response.status, body: response.body }, status: 200
