@@ -8,7 +8,7 @@ class ApiController < ApplicationController
   def list_endpoints
     endpoints = Endpoint.all
     respond_to do |format|
-      format.json { render json: endpoints}
+      format.json { render json: endpoints }
     end
   end
 
@@ -16,24 +16,22 @@ class ApiController < ApplicationController
   def request
     raise 'That endpoint does not exist' if @endpoint.nil?
 
-    client = @endpoint.client
     endpoint_client = EndpointClient.new(endpoint)
-    response = endpoint_client.request(@arguments) 
+    response = endpoint_client.request(@arguments)
     respond_to do |format|
-      format.json { render json: {status: response.status, body: response.body}.to_json }
+      format.json { render json: { status: response.status, body: response.body }.to_json }
     end
   end
 
   private
 
   def set_endpoint
-    puts "working on it"
-    @endpoint = Endpoint.where(name: params[:request_name]).
-                               where(client_tag: params[:client_tag]).first
+    puts 'working on it'
+    @endpoint = Endpoint.where(name: params[:request_name])
+                        .where(client_tag: params[:client_tag]).first
   end
 
   def set_arguments
     @arguments = params[:arguments]
   end
-
 end

@@ -27,5 +27,4 @@ class EndpointClient
     extra_params = @endpoint_request_builder.extra_params(argument_array)
     [url_path, extra_params]
   end
-
 end
