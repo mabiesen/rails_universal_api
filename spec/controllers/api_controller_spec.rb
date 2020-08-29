@@ -23,7 +23,6 @@ describe ApiController, type: :controller do
       it 'should return json output for called entity' do
         allow_any_instance_of(ApiController).to receive(:make_request).and_return( good_response )
         post "call", params: params
-        expect(response.status).to eq(200)
         expect(JSON.parse(response.body)['status']).to eq(350)
         expect(JSON.parse(response.body)['body']).to eq('some_json')
       end
