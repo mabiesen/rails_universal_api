@@ -13,8 +13,9 @@ class EndpointClient
 
   def request(argument_array)
     url_path, extra_params = build_request(argument_array)
-    @client.send(@request_method_symbol, url_path) do |req|
-      set_body(req, extra_params)
+    @client.send(@request_method_symbol) do |req|
+      req.url url_path, extra_params
+      req.headers['Content-Type'] = 'application/json'
     end
   end
 
@@ -27,7 +28,4 @@ class EndpointClient
     [url_path, extra_params]
   end
 
-  def set_body(client_request, extra_params)
-    client_request.body = extra_params.to_json
-  end
 end

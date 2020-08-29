@@ -10,7 +10,7 @@ class EndpointRequestMethodValidator < ActiveModel::Validator
   end
 
   def request_method_is_accepted_method
-    is_valid_method = %w[put post].include? @request_method
+    is_valid_method = %w[put post get].include? @request_method
     @record.errors.add(:request_method, 'request method is not put or post method') unless is_valid_method
   end
 end
