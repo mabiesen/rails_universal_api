@@ -6,9 +6,7 @@ class ApiController < ApplicationController
   # returns list of endpoints
   def list_endpoints
     endpoints = Endpoint.all
-    respond_to do |format|
-      format.json { render json: endpoints }
-    end
+    render json: endpoints, status: 200
   end
 
   # makes an api request
@@ -20,7 +18,7 @@ class ApiController < ApplicationController
     endpoint_client = EndpointClient.new(@endpoint)
     response = endpoint_client.request(@arguments)
     respond_to do |format|
-      format.json { render json: { status: response.status, body: response.body }.to_json }
+      format.json { render json: { status: response.status, body: response.body }, status: 200}
     end
   end
 
