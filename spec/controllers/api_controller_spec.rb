@@ -29,9 +29,10 @@ describe ApiController, type: :controller do
       end
     end
 
-    context 'when called with error' do
-      it 'should return json output indicating error' do
-        
+    context 'when endpoint cannot be found' do
+      it 'should raise error that endpoint was not found' do
+        post "call", params: {client_tag: 'dolittle', request_name: 'nothin'} 
+        expect(response.status).to eq(404) 
       end
     end
   end

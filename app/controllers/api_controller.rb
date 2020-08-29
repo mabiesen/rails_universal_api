@@ -12,10 +12,13 @@ class ApiController < ApplicationController
 
   # makes an api request
   def call
-    raise 'That endpoint does not exist' if @endpoint.nil?
-
-    response = make_request
-    render json: { status: response.status, body: response.body }, status: 200
+    if @endpoint.nil?
+      error_string = "no endpoint was found: #{@client_tag} with request #{@request_name}"
+      render json: { error: error_string}, status: 404
+    else
+      response = make_request
+      render json: { status: response.status, body: response.body }, status: 200
+    end
   end
 
   private
