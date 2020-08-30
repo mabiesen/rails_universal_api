@@ -35,9 +35,8 @@ class EndpointRequestBuilder
     end
   end
 
-
   private
- 
+
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
     raise 'input contains unidentified params' unless (data_hash.keys - @params.keys).empty?
@@ -81,7 +80,7 @@ class EndpointRequestBuilder
     end
     path
   end
-  
+
   def extra_params_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     final_hash = {}
