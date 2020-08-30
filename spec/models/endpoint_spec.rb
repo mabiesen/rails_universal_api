@@ -31,13 +31,6 @@ RSpec.describe Endpoint, type: :model do
       end
     end
 
-    context 'URL_PATH does not contain at least one variable' do
-      it 'should raise error' do
-        url_path = '/v1/stuff/things' #things does not have preceding colon, is not a variable
-        expect(FactoryBot.build(:endpoint, url_path: url_path)).to_not be_valid
-      end
-    end
-
     context "NAME contains spaces" do
       it 'should raise error' do
         name = 'issue all approved batch errors'
