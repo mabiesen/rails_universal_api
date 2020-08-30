@@ -28,8 +28,6 @@ describe ApiController, type: :controller do
 
   describe '#call' do
     context 'when called' do
-      # TEST FAILING ON CIRCLECI
-      # TEST PASSES LOCALLY
       let (:good_response) { Struct.new(:status, :body).new(350, 'some_json') }
       let (:params) { { client_tag: 'github',
                         request_name: 'get_pull_requests',
@@ -37,8 +35,11 @@ describe ApiController, type: :controller do
       it 'should return json', :skip => 'fails in circleci only' do 
         allow_any_instance_of(ApiController).to receive(:make_request).and_return( good_response )
         post "call", params: params
-        expect(JSON.parse(response.body)['status']).to eq(350)
-        expect(JSON.parse(response.body)['body']).to eq('some_json')
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['status']).to eq(350)
+        expect(parsed_body['body']).to eq('some_json')
+        expect{ Float(parsed_body['benchmark']['real'])}.not_to raise_error
+        expect(Float(parsed_body['benchmark']['real'])).not_to eq(0)
       end
     end
 
