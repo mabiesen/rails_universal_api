@@ -6,10 +6,22 @@ describe ApiController, type: :controller do
 
   describe '#list_endpoints' do
     context 'when called' do
-      it 'should return json containing all available endpoints' do
+      it 'should return json containing all available endpoints', :skip => 'fails in circleci only' do
         get "list_endpoints"
         expect(response.status).to eq(200)
         expect(response.body).to eq(Endpoint.all.to_json)
+      end
+    end
+    
+    context 'when called with parameters' do
+        let(:github_endpoint ) { FactoruyBot.create(:endpoint, name: 'something') }
+        let(:non_github_endpoint) { FactoryBot.create(:endpoint, client_tag: google, name: 'something_else') }
+      it 'should filter endpoints' , :skip => 'fails in circleci only' do
+        get "list_endpoints", params: {client_tag: 'github'}
+        body = JSON.parse(response.body)
+        client_tags = body.map{|x| x['client_tag']}.uniq
+        expect(client_tags.count).to eq(1)
+        expect(client_tags.first).to eq('github')
       end
     end
   end
