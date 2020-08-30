@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/circleci/mabiesen/rails_universal_api.svg?style=svg&circle-token=9ec2448fe91308350282e35c836d082a52706af6)](<LINK>)
 # Rails Universal Api
 
 ## About
