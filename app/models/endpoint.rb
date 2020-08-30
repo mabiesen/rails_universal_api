@@ -17,7 +17,7 @@ class Endpoint < ApplicationRecord
 
   CLIENT_MAP = { 'github' => GITHUB_CLIENT,
                  'newsapi' => NEWSAPI_CLIENT,
-                 'mailboxlayer' => MAILBOXLAYER_CLIENT}.freeze
+                 'mailboxlayer' => MAILBOXLAYER_CLIENT }.freeze
 
   def url_variables
     url_path.split('/').select { |x| x.include?(':') }.map do |var|
