@@ -1,0 +1,14 @@
+default: &default
+  url: 'https://www.apilayer.net'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+
+staging:
+  <<: *default
