@@ -1,40 +1,66 @@
-[![CircleCI](https://circleci.com/gh/mabiesen/rails_universal_api.svg?style=svg&circle-token=9ec2448fe91308350282e35c836d082a52706af6)](<LINK>)
 # Rails Universal Api
+
+[![CircleCI](https://circleci.com/gh/mabiesen/rails_universal_api.svg?style=svg&circle-token=9ec2448fe91308350282e35c836d082a52706af6)](<LINK>)
 
 ## About
 
-Project aims to resolve the following problems frequently encountered in API usage:
-* hard-coded, individually tailored ways to access an endpoint can be burdensome to update
-* gems/libraries to his specific API vendors often cannot maintain pace with api updated.
-* even if gems/libraries could maintain pace, there is the concern that consuming applications may need to update as methodologies become deprecated. Gems are nice insofar as they format data, but this can be done at the level of business decisioning.
-* there is often unnecessary complexity in url path naming, and the combination of embedded path variables + json request can be daunting.  If the json is nested the challenge in terminal becomes greater. 
+#### Reasons For Project
 
-To illustrate the problem, this is the github api for pull requests:
-```
-https://api.github.com/repos/mabiesen/rails_universal_api/pulls + parameters
-```
-^^ one has to differentiate arguments to url path from arguments to parameters
+* one should not have remake the wheel every time they wish to make an API request in a new project(#BEDRY)
+* gems are an imperfect DRY solution: updates are slow relative to new API releases, often the implementation (parsing of response etc.) causes updates to be slow, in the event of update one must attempt update in every project (often requiring other dependency updates, which may be problematic), and when gems are used there are often low level, repeated methodologies that end up getting  created in each application's business logic because there is often little incentive to dedicate time to pull request someone else's gem.
 
-----
+#### Features of Project
 
-In this project, all apis may be reached in the following manner:
+###### Intuitively Named URLs
+
+Completed
+
+Often URLs require interpolation + parameters. This is a bit burdensome on the end user, so we are wrapping the issue such  that the end user can supply all parameters as query parameters.  All endpoints may be reached in the following manner as regards url path:
 ```
- https://localhost:3000/call/github/get_pull_requests + parameters
+http http://localhost:3000/call/github/get_pull_requests
 ```
 
-PROJECT WISH LIST:
-* authentication for users
-* dockerize
-* better storage of credentials
-* generator to boilerplate the addition of new clients
-* UI for managing endpoints
-* optional filter route which can parse json for only desired fields.  Filters would be linked to endpoints.
-* UI for managing filters
-* mass request processing with temporary storage options
+###### Benchmarking for API Calls
 
-FURTHER WISHES - Gemify the concern
+Completed 
 
-This is a good proof of concept but it could be made better. Could use sqlite to store endpoints, that would make this concept ingestible as a gem. Could offer a generator for rails to add to any project. 
+Super simple implementation.  All calls to endpoints (if successful) will  return benchmark information indicating how long it took to validate + buildrequest + reach API endpoint.  This should be used as an understanding of system health, and against an endpoint request baseline one could determine if there is an issue with the API provider. 
+
+###### 2D to 3D data
+
+Completed
+
+Often API's require three dimensional (nested) hashes, but these are difficult for the user to build.  A methodology has been created to transform 2D data to 3D data based upon a json body template.
+
+###### DRY Data filtering
+
+TODO
+
+Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer these common filters are not applicable across projects.
+
+###### Dockerized
+
+TODO 
+
+Once dockerized, one can implement this alongside any project within-node, which may be a good implmemetation for medium sized projects.
+
+###### Permissioning
+
+TODO
+
+Should have proper authentication.  API credentials should be stored better, presently just a .env.local file. 
+
+###### Skinny Project Templating
+
+TODO
+
+Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism will be created to allow one to generate http request scripts for use in other projects.
+
+###### UI Endpoint Execution
+
+TODO
+
+This UI would template out parameters in table format and offer AJAX data validation prior to data send. 
 
 #### Ruby version
 
@@ -60,5 +86,10 @@ Steps for adding endpoints
 1. rails g migration adding_some_endpoint_name
 2. fill out the migration
 3. run rails db:migrate RAILS_ENV=development
+
+Versioning a new release should be done as follows:
+- Patch Update - Fix application related concerns
+- Minor Update - Change to an existing endpoint or client (Example: 0.7.122 -> 0.8.0)
+- Major Update - New/Delete endpoint or client, route addtions  (0.7.122 -> 1.0.0)
 
 NOTE: endpoints may not be added until a client has been added
