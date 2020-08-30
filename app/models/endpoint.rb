@@ -15,7 +15,8 @@ class Endpoint < ApplicationRecord
 
   has_many :batches
 
-  CLIENT_MAP = { 'github' => GITHUB_CLIENT }.freeze
+  CLIENT_MAP = { 'github' => GITHUB_CLIENT,
+                 'newsapi' => NEWSAPI_CLIENT }.freeze
 
   def url_variables
     url_path.split('/').select { |x| x.include?(':') }.map do |var|
