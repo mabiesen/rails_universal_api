@@ -46,3 +46,18 @@ from circleci cli while in home directory
 ```
 cirlceci local execute
 ```
+
+#### Contributing
+
+Steps for adding clients
+1. add a /config/\<client_name\>.yml to store url information
+2. add a /config/initializers/\<client_name\>.rb to initialize your client.
+3. add the client to the client map in /app/models/endpoint.rb
+4. environment variables consumed by the initializer should be placed in /.env.local
+
+Steps for adding endpoints
+1. rails g migration adding_some_endpoint_name
+2. fill out the migration
+3. run rails db:migrate RAILS_ENV=development
+
+NOTE: endpoints may not be added until a client has been added
