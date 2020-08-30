@@ -14,7 +14,7 @@ describe ApiController, type: :controller do
     end
     
     context 'when called with parameters' do
-        let(:github_endpoint ) { FactoruyBot.create(:endpoint, name: 'something') }
+        let(:github_endpoint ) { FactoryBot.create(:endpoint, name: 'something') }
         let(:non_github_endpoint) { FactoryBot.create(:endpoint, client_tag: google, name: 'something_else') }
       it 'should filter endpoints' , :skip => 'fails in circleci only' do
         get "list_endpoints", params: {client_tag: 'github'}
