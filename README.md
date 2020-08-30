@@ -2,20 +2,38 @@
 
 ## About
 
-Project aims to reduce the user-experienced complexity of api endpoints.
+Project aims to resolve the following problems frequently encountered in API usage:
+* hard-coded, individually tailored ways to access an endpoint can be burdensome to update
+* gems/libraries to his specific API vendors often cannot maintain pace with api updated.
+* even if gems/libraries could maintain pace, there is the concern that consuming applications may need to update as methodologies become deprecated. Gems are nice insofar as they format data, but this can be done at the level of business decisioning.
+* there is often unnecessary complexity in url path naming, and the combination of embedded path variables + json request can be daunting.  If the json is nested the challenge in terminal becomes greater. 
 
-Such complexity includes:
-* library reliance - not-immediately-visible code, libraries prone to lag behind application updates
-* 3d data - At times api endpoints require nested hashes, this isn't modeled wel
-l for ease-of-use.
-* odd url paths
-* version deprecation - having to update multiple, independent references
-* etc.
+To illustrate the problem, this is the github api for pull requests:
+```
+https://api.github.com/repos/mabiesen/rails_universal_api/pulls + parameters
+```
+^^ one has to differentiate arguments to url path from arguments to parameters
 
-The complexity can be compounded in an enterprise environment as often http requests are crafted within the application rather than shared across applications.
- It is also compounded for those new-to-code.
+----
 
-As a proof of concept, I thought it might be fun to create a way to store favorite API endpoints in a searchable and easily executable manner. The project will handle the issue of converting 2d data structures into 3d data to enhance the user experience.  The project could incorporate an infrastructure for long running requests, coupled with a 'temporary' storage system to retrieve data once processed. If used as the soul source of api communication, it will be easy to maintain application integrity of subsidiary applicaitons during api upgrades. Project goal is primarily to act as a pass through for api requests, however there could be gui incorporation.
+In this project, all apis may be reached in the following manner:
+```
+ https://localhost:3000/call/github/get_pull_requests + parameters
+```
+
+PROJECT WISH LIST:
+* authentication for users
+* dockerize
+* better storage of credentials
+* generator to boilerplate the addition of new clients
+* UI for managing endpoints
+* optional filter route which can parse json for only desired fields.  Filters would be linked to endpoints.
+* UI for managing filters
+* mass request processing with temporary storage options
+
+FURTHER WISHES - Gemify the concern
+
+This is a good proof of concept but it could be made better. Could use sqlite to store endpoints, that would make this concept ingestible as a gem. Could offer a generator for rails to add to any project. 
 
 #### Ruby version
 
