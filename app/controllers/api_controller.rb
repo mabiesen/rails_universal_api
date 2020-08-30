@@ -16,8 +16,12 @@ class ApiController < ApplicationController
       error_string = "no endpoint was found: #{@client_tag} with request #{@request_name}"
       render json: { error: error_string }, status: 404
     else
-      response = make_request
-      render json: { status: response.status, body: response.body }, status: 200
+      begin
+        response = make_request
+        render json: { status: response.status, body: response.body }, status: 200
+      rescue StandardError => e
+        render json: { error: e.to_s }, status: 500
+      end
     end
   end
 
