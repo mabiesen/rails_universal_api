@@ -1,5 +1,5 @@
 class AddNewsapiQueryEndpoint < ActiveRecord::Migration[5.2]
-  def change
+  def up
     Endpoint.new(name: 'get_all_news',
                  url_path: '/v2/everything',
                  params: {q: {type:'String', optional: false},
@@ -14,5 +14,10 @@ class AddNewsapiQueryEndpoint < ActiveRecord::Migration[5.2]
                     client_tag: 'newsapi',
                     request_method: 'get',
                     body_template: nil).save!
+  end
+
+  def down
+    Endpoint.where(name: 'get_all_news')
+            .where(client_tag: 'newsapi').first.try(:destroy)
   end
 end
