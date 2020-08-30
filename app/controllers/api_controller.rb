@@ -19,8 +19,8 @@ class ApiController < ApplicationController
       begin
         response = make_request
         render json: { status: response.status, body: response.body }, status: 200
-      rescue => error
-        render json: { error: error.to_s}, status: 500
+      rescue StandardError => e
+        render json: { error: e.to_s }, status: 500
       end
     end
   end
