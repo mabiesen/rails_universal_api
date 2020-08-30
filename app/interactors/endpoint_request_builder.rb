@@ -42,9 +42,8 @@ class EndpointRequestBuilder
     data_hash = data_hash.stringify_keys
     raise 'input contains unidentified params' unless (data_hash.keys - @params.keys).empty?
 
-    new_hash = @params.merge(data_hash)
-    new_hash.each do |key, value|
-      validate_param(key, value)
+    @params.each do |key, _|
+      validate_param(key, data_hash[key])
     end
   end
 
