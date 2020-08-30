@@ -17,5 +17,4 @@ class EndpointUrlPathValidator < ActiveModel::Validator
   def does_not_end_in_slash
     @record.errors.add(:url, 'must not end in slash') if @url_path[-1] == '/'
   end
-
 end
