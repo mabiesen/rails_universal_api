@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'simplecov'
 require 'simplecov-cobertura'
 
@@ -13,8 +14,8 @@ SimpleCov.start('rails') do
   SimpleCov.start('rails') do
     track_files false
 
-    add_group "Mailers",    "app/mailers"
-    add_group "Validators", "app/validators"
-    add_group "Workers",    "app/workers"
+    add_group 'Mailers',    'app/mailers'
+    add_group 'Validators', 'app/validators'
+    add_group 'Workers',    'app/workers'
   end
 end
