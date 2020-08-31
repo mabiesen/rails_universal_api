@@ -35,6 +35,16 @@ class EndpointRequestBuilder
     end
   end
 
+  def validate_param(param_name, data)
+    optional = @params[param_name]['optional']
+    data_type = @params[param_name]['type']
+    raise "No data supplied for column #{param_name}, column is not optional. puts #{data}" if !optional && data.nil?
+
+    return if data.nil?
+
+    raise "Data in column #{param_name} is not a valid #{data_type}" unless valid_data_for_type?(data, data_type)
+  end
+
   private
 
   def validate_hash_inputs(data_hash)
@@ -51,17 +61,7 @@ class EndpointRequestBuilder
       validate_param(param_name, data_array[i])
     end
   end
-
-  def validate_param(param_name, data)
-    optional = @params[param_name]['optional']
-    data_type = @params[param_name]['type']
-    raise "No data supplied for column #{param_name}, column is not optional. puts #{data}" if !optional && data.nil?
-
-    return if data.nil?
-
-    raise "Data in column #{param_name} is not a valid #{data_type}" unless valid_data_for_type?(data, data_type)
-  end
-
+  
   # replace variables in url path by position
   def formatted_url_path_for_array(data_array)
     data_to_replace_variables = data_array.first(@url_variables.count)
