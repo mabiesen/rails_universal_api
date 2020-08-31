@@ -2,6 +2,9 @@
 
 [![CircleCI](https://circleci.com/gh/mabiesen/rails_universal_api.svg?style=svg&circle-token=9ec2448fe91308350282e35c836d082a52706af6)](<LINK>)
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/mabiesen/rails_universal_api/graphs/commit-activity)
+
+
 ## About
 
 #### Reasons For Project
@@ -11,7 +14,7 @@
 
 #### Features of Project
 
-###### Intuitively Named URLs
+##### Intuitively Named URLs
 
 Completed
 
@@ -20,43 +23,43 @@ Often URLs require interpolation + parameters. This is a bit burdensome on the e
 http http://localhost:3000/call/github/get_pull_requests
 ```
 
-###### Benchmarking for API Calls
+##### Benchmarking for API Calls
 
 Completed 
 
 Super simple implementation.  All calls to endpoints (if successful) will  return benchmark information indicating how long it took to validate + buildrequest + reach API endpoint.  This should be used as an understanding of system health, and against an endpoint request baseline one could determine if there is an issue with the API provider. 
 
-###### 2D to 3D data
+##### 2D to 3D data
 
 Completed
 
 Often API's require three dimensional (nested) hashes, but these are difficult for the user to build.  A methodology has been created to transform 2D data to 3D data based upon a json body template.
 
-###### DRY Data filtering
+##### DRY Data filtering
 
 TODO
 
 Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer these common filters are not applicable across projects.
 
-###### Dockerized
+##### Dockerized
 
 TODO 
 
 Once dockerized, one can implement this alongside any project within-node, which may be a good implmemetation for medium sized projects.
 
-###### Permissioning
+##### Permissioning
 
 TODO
 
 Should have proper authentication.  API credentials should be stored better, presently just a .env.local file. 
 
-###### Skinny Project Templating
+##### Skinny Project Templating
 
 TODO
 
 Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism will be created to allow one to generate http request scripts for use in other projects.
 
-###### UI Endpoint Execution
+##### UI Endpoint Execution
 
 TODO
 
