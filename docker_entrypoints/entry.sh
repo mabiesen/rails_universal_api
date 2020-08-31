@@ -19,7 +19,10 @@ done || exit 1
 
 # Run migrations if necessary.
 echo "Running migrations if necessary..."
-bundle exec rake db:migrate 2>/dev/null || ./bin/setup
+#bundle exec rake db:migrate 2>/dev/null || ./bin/setup
+bundle exec rake db:drop
+bundle exec rake db:create
+bundle exec rake db:migrate
 
 # Start the rails server.
 bundle exec rails s -b 0.0.0.0 -p ${EXPOSE_PORT:-3000}

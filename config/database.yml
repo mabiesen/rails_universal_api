@@ -21,8 +21,7 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   migrations_paths:
-  - "db/migrate/database_general"
-  - "db/migrate/endpoints"
+  - "db/migrate"
 
 development:
   <<: *default
@@ -84,5 +83,3 @@ test:
 production:
   <<: *default
   database: rails_universal_api_production
-  username: rails_universal_api
-  password: <%= ENV['RAILS_UNIVERSAL_API_DATABASE_PASSWORD'] %>
