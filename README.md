@@ -7,6 +7,8 @@
 
 ## About
 
+A centralized location to access API endpoints.  Can serve as an endpoint manifest to internal services offered in large enterprise environments.
+
 ### Reasons For Project
 
 * one should not have remake the wheel every time they wish to make an API request in a new project(#BEDRY)
@@ -39,7 +41,7 @@ Often API's require three dimensional (nested) hashes, but these are difficult f
 
 TODO
 
-Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer these common filters are not applicable across projects.
+Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer within an application, these common filters are not usually granted cross-project applicability.
 
 #### Dockerized
 
