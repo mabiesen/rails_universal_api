@@ -84,5 +84,3 @@ test:
 production:
   <<: *default
   database: rails_universal_api_production
-  username: rails_universal_api
-  password: <%= ENV['RAILS_UNIVERSAL_API_DATABASE_PASSWORD'] %>

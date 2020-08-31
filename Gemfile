@@ -34,6 +34,11 @@ gem 'faraday_middleware'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# gem 'sidekiq', '~> 5.0'
+# gem 'sidekiq-instrument'
+# gem 'sidekiq-unique-jobs'
+# gem 'active_record_stats', '~> 0.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -42,6 +47,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
+  #  gem 'rspec-sidekiq'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rspec'
