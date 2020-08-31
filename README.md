@@ -7,14 +7,14 @@
 
 ## About
 
-#### Reasons For Project
+### Reasons For Project
 
 * one should not have remake the wheel every time they wish to make an API request in a new project(#BEDRY)
 * gems are an imperfect DRY solution: updates are slow relative to new API releases, often the implementation (parsing of response etc.) causes updates to be slow, in the event of update one must attempt update in every project (often requiring other dependency updates, which may be problematic), and when gems are used there are often low level, repeated methodologies that end up getting  created in each application's business logic because there is often little incentive to dedicate time to pull request someone else's gem.
 
-#### Features of Project
+### Features of Project
 
-##### Intuitively Named URLs
+#### Intuitively Named URLs
 
 Completed
 
@@ -23,53 +23,65 @@ Often URLs require interpolation + parameters. This is a bit burdensome on the e
 http http://localhost:3000/call/github/get_pull_requests
 ```
 
-##### Benchmarking for API Calls
+#### Benchmarking for API Calls
 
 Completed 
 
 Super simple implementation.  All calls to endpoints (if successful) will  return benchmark information indicating how long it took to validate + buildrequest + reach API endpoint.  This should be used as an understanding of system health, and against an endpoint request baseline one could determine if there is an issue with the API provider. 
 
-##### 2D to 3D data
+#### 2D to 3D data
 
 Completed
 
 Often API's require three dimensional (nested) hashes, but these are difficult for the user to build.  A methodology has been created to transform 2D data to 3D data based upon a json body template.
 
-##### DRY Data filtering
+#### DRY Data filtering
 
 TODO
 
 Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer these common filters are not applicable across projects.
 
-##### Dockerized
+#### Dockerized
 
-TODO 
+Completed 
 
-Once dockerized, one can implement this alongside any project within-node, which may be a good implmemetation for medium sized projects.
+In dockerized form, one can implement this alongside any project within-node, which may be a good implmemetation for medium sized projects.
 
-##### Permissioning
+#### Permissioning
 
 TODO
 
 Should have proper authentication.  API credentials should be stored better, presently just a .env.local file. 
 
-##### Skinny Project Templating
+#### Skinny Project Templating
 
 TODO
 
 Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism will be created to allow one to generate http request scripts for use in other projects.
 
-##### UI Endpoint Execution
+#### UI Endpoint Execution
 
 TODO
 
 This UI would template out parameters in table format and offer AJAX data validation prior to data send. 
 
-#### Ruby version
+## Ruby version
 
 2.6.0
 
-#### Testing
+## Usage
+
+### Docker
+
+To run the service in docker
+
+```
+docker-compose up --build
+```
+
+From there you should be able to hit localhost:3003/
+
+## Testing
 
 from circleci cli while in home directory
 
@@ -77,7 +89,7 @@ from circleci cli while in home directory
 cirlceci local execute
 ```
 
-#### Contributing
+## Contributing
 
 Steps for adding clients
 1. add a /config/\<client_name\>.yml to store url information
