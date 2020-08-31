@@ -46,6 +46,13 @@ run_rubocop: &run_rubocop
     name: Run Rubocop
     command: bundle exec rake rubocop
 
+upload_report_to_codecov: &upload_report_to_codecov
+  run:
+    name: Upload Report To Codecov
+    command: |
+      export CODECOV_TOKEN='7f61283f-e818-47d9-8764-2ec55ea674ae'
+      bash <(curl -s https://codecov.io/bash)
+
 jobs:
   build:
     working_directory: ~/repo
@@ -58,3 +65,4 @@ jobs:
       - *database_setup
       - *run_spec_tests
       - *run_rubocop
+      - *upload_report_to_codecov
