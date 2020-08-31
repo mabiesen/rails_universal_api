@@ -18,7 +18,7 @@ until psql --host="$PGHOST" --user="$PGUSER" --command "\q" >/dev/null 2>&1 || [
 done || exit 1
 
 # Run migrations if necessary.
-echo "Running migrations if necessary..."
+echo "Recreating database and running migrations"
 #bundle exec rake db:migrate 2>/dev/null || ./bin/setup
 bundle exec rake db:drop
 bundle exec rake db:create
