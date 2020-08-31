@@ -16,6 +16,5 @@ SimpleCov.start('rails') do
 
     add_group 'Mailers',    'app/mailers'
     add_group 'Validators', 'app/validators'
-    add_group 'Workers',    'app/workers'
   end
 end
