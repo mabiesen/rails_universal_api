@@ -51,8 +51,8 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rspec'
-  #gem 'simplecov'
-  #gem 'simplecov-cobertura'
+  gem 'simplecov'
+  gem 'simplecov-cobertura'
   gem 'webmock'
 end
 
