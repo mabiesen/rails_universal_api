@@ -12,66 +12,43 @@ class EndpointRequestBuilder
   end
 
   def validate(arguments)
-    if arguments.is_a? Hash
-      validate_hash_inputs(arguments)
-    else
-      validate_array_inputs(arguments)
-    end
+    validate_hash_inputs(arguments)
   end
 
   def formatted_url_path(arguments)
-    if arguments.is_a? Hash
-      formatted_url_path_for_hash(arguments)
-    else
-      formatted_url_path_for_array(arguments)
-    end
+    formatted_url_path_for_hash(arguments)
   end
 
   def extra_params(arguments)
-    if arguments.is_a? Hash
-      extra_params_for_hash(arguments)
-    else
-      extra_params_for_array(arguments)
-    end
-  end
-
-  private
-
-  def validate_hash_inputs(data_hash)
-    data_hash = data_hash.stringify_keys
-    raise 'input contains unidentified params' unless (data_hash.keys - @params.keys).empty?
-
-    @params.each do |key, _|
-      validate_param(key, data_hash[key])
-    end
-  end
-
-  def validate_array_inputs(data_array)
-    @params.keys.each_with_index do |param_name, i|
-      validate_param(param_name, data_array[i])
-    end
+    extra_params_for_hash(arguments)
   end
 
   def validate_param(param_name, data)
     optional = @params[param_name]['optional']
     data_type = @params[param_name]['type']
-    raise "No data supplied for column #{param_name}, column is not optional. puts #{data}" if !optional && data.nil?
+    raise "Supplied param_name #{param_name} does not exist for endpoint" unless @params.key?(param_name)
+
+    raise "No data supplied for column #{param_name}, column is not optional.#{data}" if !optional && data.blank?
 
     return if data.nil?
 
     raise "Data in column #{param_name} is not a valid #{data_type}" unless valid_data_for_type?(data, data_type)
   end
 
-  # replace variables in url path by position
-  def formatted_url_path_for_array(data_array)
-    data_to_replace_variables = data_array.first(@url_variables.count)
-    path = @url_path.deep_dup
-    @url_variables.each_with_index do |data, i|
-      path.gsub!(":#{data}", data_to_replace_variables[i])
+  private
+
+  # validate inputs
+  # validation occurs at the parameter collection and individual parameter level
+  def validate_hash_inputs(data_hash)
+    data_hash = data_hash.stringify_keys
+    raise 'input contains unidentified params' unless data_hash.keys.all? { |k| @params.key?(k) }
+
+    @params.each do |key, _|
+      validate_param(key, data_hash[key])
     end
-    path
   end
 
+  # interpolate url parameters with real data
   def formatted_url_path_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     path = @url_path.deep_dup
@@ -81,6 +58,8 @@ class EndpointRequestBuilder
     path
   end
 
+  # identify parameters that are beyond the scope of url interpolation
+  # convert 2d to 3d data if necessary
   def extra_params_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     final_hash = {}
@@ -89,23 +68,7 @@ class EndpointRequestBuilder
       final_hash[key] = data_hash[key]
     end
     final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash
-  end
-
-  # if the supplied data had a greater count than endpoint url variables,
-  # creates hash containing 'leftover' data paired with 'leftover' param names
-  def extra_params_for_array(data_array)
-    final_hash = {}
-    data_hash = Hash[@params.keys.zip(data_array)]
-    data_hash.delete_if { |k, _| @params.keys.first(@url_variables.count).include?(k) }
-    data_hash.compact!
-    data_hash.each do |k, v|
-      type = @params[k]['type']
-      # Numbers and boolean values are not passed as strings in json
-      final_hash[k] = format_data_for_json(v, type)
-    end
-    final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash
+    final_hash.compact
   end
 
   def valid_data_for_type?(data, data_type)

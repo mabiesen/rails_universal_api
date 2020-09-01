@@ -3,8 +3,8 @@
 require 'benchmark'
 
 class ApiController < ApplicationController
-  before_action :set_arguments, only: [:call]
-  before_action :set_endpoint, only: [:call]
+  before_action :set_arguments, only: %i[call validate_params validate_param]
+  before_action :set_endpoint, only:  %i[call validate_params validate_param]
   before_action :set_endpoints, only: [:list_endpoints]
 
   # returns list of endpoints
@@ -15,7 +15,7 @@ class ApiController < ApplicationController
   # makes an api request
   def call
     if @endpoint.nil?
-      error_string = "no endpoint was found: #{@client_tag} with request #{@request_name}"
+      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
       render json: { error: error_string }, status: 404
     else
       begin
@@ -28,9 +28,40 @@ class ApiController < ApplicationController
     end
   end
 
+  # validates all params relative to endpoint expectations
+  def validate_params
+    if @endpoint.nil?
+      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
+      render json: { error: error_string }, status: 404
+    else
+      begin
+        erb = EndpointRequestBuilder.new(@endpoint)
+        erb.validate(@arguments)
+        render json: { success: 'Params look great!' }, status: 200
+      rescue StandardError => e
+        render json: { error: e.to_s }, status: 500
+      end
+    end
+  end
+
+  # validates one param in isolation
+  def validate_param
+    if @endpoint.nil?
+      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
+      render json: { error: error_string }, status: 404
+    else
+      begin
+        erb = EndpointRequestBuilder.new(@endpoint)
+        erb.validate_param(@arguments.keys.first.to_s, @arguments.values.first)
+        render json: { success: 'Param looks great!' }, status: 200
+      rescue StandardError => e
+        render json: { error: e.to_s }, status: 500
+      end
+    end
+  end
+
   private
 
-  # executes the api request
   def make_request
     endpoint_client = EndpointClient.new(@endpoint)
     endpoint_client.request(@arguments)

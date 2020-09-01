@@ -14,19 +14,19 @@ RSpec.describe EndpointClient do
   describe '#request' do 
     context 'when a perfect endpoint is used' do
       it 'should return with expected body' do
-        expect(endpoint_client.request(['3']).body).to eq('something')
+        expect(endpoint_client.request({things: '3'}).body).to eq('something')
       end
     end
 
     context 'when an invalid endpoint is used' do
       it 'should return 500 response status' do
-        expect(endpoint_client.request(['2']).status).to eq(500)
+        expect(endpoint_client.request({things: '2'}).status).to eq(500)
       end
     end
 
     context 'when invalid data is supplied to the application' do
       it 'should return error string containing error data' do
-        expect(endpoint_client.request(['1']).body['error']).to eq('AnError')
+        expect(endpoint_client.request({things: '1'}).body['error']).to eq('AnError')
       end
     end
   end
