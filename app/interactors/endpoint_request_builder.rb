@@ -35,36 +35,18 @@ class EndpointRequestBuilder
 
   private
 
+  # validate inputs
+  # validation occurs at the parameter collection and individual parameter level
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    puts "Param keys: #{@params.keys}"
-    puts "Data hash keys: #{@data_hash.try(:keys)}"
     raise 'input contains unidentified params' unless data_hash.keys.all? {|k|  @params.keys.include?(k) }
-
-    puts "all datahash keys #{data_hash.keys.all?}"
-    puts "#{data_hash.keys}"
 
     @params.each do |key, _|
       validate_param(key, data_hash[key])
     end
   end
 
-  def validate_array_inputs(data_array)
-    @params.keys.each_with_index do |param_name, i|
-      validate_param(param_name, data_array[i])
-    end
-  end
-  
-  # replace variables in url path by position
-  def formatted_url_path_for_array(data_array)
-    data_to_replace_variables = data_array.first(@url_variables.count)
-    path = @url_path.deep_dup
-    @url_variables.each_with_index do |data, i|
-      path.gsub!(":#{data}", data_to_replace_variables[i])
-    end
-    path
-  end
-
+  # interpolate url parameters with real data
   def formatted_url_path_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     path = @url_path.deep_dup
@@ -74,28 +56,14 @@ class EndpointRequestBuilder
     path
   end
 
+  # identify parameters that are beyond the scope of url interpolation
+  # convert 2d to 3d data if necessary
   def extra_params_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     final_hash = {}
     extra_keys = @params.keys - @url_variables
     extra_keys.each do |key|
       final_hash[key] = data_hash[key]
-    end
-    final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash.compact
-  end
-
-  # if the supplied data had a greater count than endpoint url variables,
-  # creates hash containing 'leftover' data paired with 'leftover' param names
-  def extra_params_for_array(data_array)
-    final_hash = {}
-    data_hash = Hash[@params.keys.zip(data_array)]
-    data_hash.delete_if { |k, _| @params.keys.first(@url_variables.count).include?(k) }
-    data_hash.compact
-    data_hash.each do |k, v|
-      type = @params[k]['type']
-      # Numbers and boolean values are not passed as strings in json
-      final_hash[k] = format_data_for_json(v, type)
     end
     final_hash = populate_body_template(final_hash) unless @body_template.nil?
     final_hash.compact
