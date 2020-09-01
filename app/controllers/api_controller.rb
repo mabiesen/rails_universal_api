@@ -37,7 +37,7 @@ class ApiController < ApplicationController
       begin
         erb = EndpointRequestBuilder.new(@endpoint)
         erb.validate(@arguments)
-        render json: { success: "Params look great!"}, status: 200
+        render json: { success: "Params look great!", arguments: @arguments, request_name: params[:request_name]}, status: 200
       rescue StandardError => e
         render json: { error: e.to_s }, status: 500
       end
@@ -49,13 +49,13 @@ class ApiController < ApplicationController
     if @endpoint.nil?
       error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
       render json: { error: error_string }, status: 404
-    elsif !@endpoint.params.keys.include?(@arguments.keys.first)
+    elsif !@endpoint.params.keys.include?(@arguments.keys.first.to_s)
        error_string = "supplied argument '#{@arguments.keys.first}' is not a param for the provided endpoint"
-       render json: { error: error_string }, status: 404
+       render json: { error: error_string }, status: 500
     else
       begin
         erb = EndpointRequestBuilder.new(@endpoint)
-        erb.validate_param(@arguments.keys.first, @arguments.values.first)
+        erb.validate_param(@arguments.keys.first.to_s, @arguments.values.first)
         render json: { success: "Param looks great!"}, status: 200
       rescue StandardError => e
         render json: { error: e.to_s }, status: 500

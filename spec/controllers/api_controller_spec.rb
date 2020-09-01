@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe ApiController, type: :controller do
-  let(:github_endpoint ) { FactoryBot.create(:endpoint, name: 'get_pull_requests', client_tag: 'github') }
+  let(:github_endpoint ) { FactoryBot.create(:endpoint) }
 
   before(:each) do
     github_endpoint.save!
@@ -20,7 +20,7 @@ describe ApiController, type: :controller do
     
     context 'when called with parameters' do
       it 'should filter endpoints' do
-        post "list_endpoints", params: {client_tag: 'github'}
+        post "list_endpoints", params: {client_tag: github_endpoint.client_tag}
         body = JSON.parse(response.body)
         client_tags = body.map{|x| x['client_tag']}.uniq
         expect(client_tags.count).to eq(1)
@@ -29,30 +29,11 @@ describe ApiController, type: :controller do
     end
   end
 
-  describe '#validate_params' do
-    context 'when called successfully' do
-      let (:params) { { client_tag: 'github',
-                      request_name: 'get_pull_requests',
-                      arguments: {owner: 'mabiesen', repo: 'rails_universal_api'}} }
-      it 'should return status 200' do
-        post "validate_params", params: params
-        expect(response.status).to eq(200)
-      end
-    end
-
-    context 'when endpoint cannot be found' do
-      it 'should return 404 status' do
-        post "validate_params", params: {client_tag: 'shenan', request_name: 'igans'}
-        expect(response.status).to eq(404)
-      end
-    end
-  end
-
   describe '#call' do
     context 'when called' do
       let (:good_response) { Struct.new(:status, :body).new(350, 'some_json') }
       let (:params) { { client_tag: 'github',
-                        request_name: 'get_pull_requests',
+                        request_name: 'test',
                         arguments: ['mabiesen','universal_rails_api','closed']} }
       it 'should return json' do 
         allow_any_instance_of(ApiController).to receive(:make_request).and_return( good_response )
@@ -75,9 +56,64 @@ describe ApiController, type: :controller do
     context 'when request error occurs' do
       it 'should return 500 status' do
         allow_any_instance_of(ApiController).to receive(:make_request).and_raise( 'custom error' )
-        post "call", params: {client_tag: 'github', request_name: 'get_pull_requests', arguments: {foo: 'bar'}}
+        post "call", params: {client_tag: 'github', request_name: 'test', arguments: {foo: 'bar'}}
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).to eq('custom error')
+      end
+    end
+  end
+
+  describe '#validate_params' do
+    context 'when called successfully' do
+      let (:params) { { client_tag: 'github',
+                      request_name: 'test',
+                      arguments: {things: 'mabiesen'}} }
+      it 'should return status 200' do
+        post "validate_params", params: params
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'when request error occurs' do
+      let (:params) { { client_tag: 'github',
+                      request_name: 'test',
+                      arguments: {foo: 'bar'} } }
+      it 'should return 500 status' do
+        post "validate_params", params: params
+        puts "Response body #{response.body}"
+        expect(response.status).to eq(500)
+        expect(JSON.parse(response.body)['error']).not_to be(nil)
+      end
+    end
+
+    context 'when endpoint cannot be found' do
+      it 'should return 404 status' do
+        post "validate_params", params: {client_tag: 'shenan', request_name: 'igans'}
+        expect(response.status).to eq(404)
+      end
+    end
+  end
+
+  describe '#validate_param' do
+    context 'when called successfully' do
+      it 'should return 200 response' do
+        post "validate_param", params: {client_tag: 'github', request_name: 'test', arguments: {things: 'mabiesen'}}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'when endpoint cannot be found' do
+      it 'should return 404 status' do
+        post "validate_param", params: {client_tag: 'shenan', request_name: 'igans'}
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'when request error occurs' do
+      it 'should return 500 status' do
+        post "validate_param", params: {client_tag: 'github', request_name: 'test', arguments: {foo: 'bar'}}
+        expect(response.status).to eq(500)
+        expect(JSON.parse(response.body)['error']).not_to be(nil)
       end
     end
   end

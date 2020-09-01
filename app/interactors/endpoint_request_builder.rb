@@ -12,27 +12,15 @@ class EndpointRequestBuilder
   end
 
   def validate(arguments)
-    if arguments.is_a? Hash
-      validate_hash_inputs(arguments)
-    else
-      validate_array_inputs(arguments)
-    end
+    validate_hash_inputs(arguments)
   end
 
   def formatted_url_path(arguments)
-    if arguments.is_a? Hash
-      formatted_url_path_for_hash(arguments)
-    else
-      formatted_url_path_for_array(arguments)
-    end
+    formatted_url_path_for_hash(arguments)
   end
 
   def extra_params(arguments)
-    if arguments.is_a? Hash
-      extra_params_for_hash(arguments)
-    else
-      extra_params_for_array(arguments)
-    end
+    extra_params_for_hash(arguments)
   end
 
   def validate_param(param_name, data)
@@ -49,7 +37,12 @@ class EndpointRequestBuilder
 
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    raise 'input contains unidentified params' unless (data_hash.keys - @params.keys).empty?
+    puts "Param keys: #{@params.keys}"
+    puts "Data hash keys: #{@data_hash.try(:keys)}"
+    raise 'input contains unidentified params' unless data_hash.keys.all? {|k|  @params.keys.include?(k) }
+
+    puts "all datahash keys #{data_hash.keys.all?}"
+    puts "#{data_hash.keys}"
 
     @params.each do |key, _|
       validate_param(key, data_hash[key])
@@ -89,7 +82,7 @@ class EndpointRequestBuilder
       final_hash[key] = data_hash[key]
     end
     final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash
+    final_hash.compact
   end
 
   # if the supplied data had a greater count than endpoint url variables,
@@ -98,14 +91,14 @@ class EndpointRequestBuilder
     final_hash = {}
     data_hash = Hash[@params.keys.zip(data_array)]
     data_hash.delete_if { |k, _| @params.keys.first(@url_variables.count).include?(k) }
-    data_hash.compact!
+    data_hash.compact
     data_hash.each do |k, v|
       type = @params[k]['type']
       # Numbers and boolean values are not passed as strings in json
       final_hash[k] = format_data_for_json(v, type)
     end
     final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash
+    final_hash.compact
   end
 
   def valid_data_for_type?(data, data_type)
