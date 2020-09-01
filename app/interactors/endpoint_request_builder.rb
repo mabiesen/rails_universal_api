@@ -26,6 +26,8 @@ class EndpointRequestBuilder
   def validate_param(param_name, data)
     optional = @params[param_name]['optional']
     data_type = @params[param_name]['type']
+    raise "Supplied param_name #{param_name} does not exist for endpoint" unless @params.key?(param_name)
+
     raise "No data supplied for column #{param_name}, column is not optional.#{data}" if !optional && data.blank?
 
     return if data.nil?
@@ -39,7 +41,7 @@ class EndpointRequestBuilder
   # validation occurs at the parameter collection and individual parameter level
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    raise 'input contains unidentified params' unless data_hash.keys.all? {|k|  @params.keys.include?(k) }
+    raise 'input contains unidentified params' unless data_hash.keys.all? { |k| @params.key?(k) }
 
     @params.each do |key, _|
       validate_param(key, data_hash[key])
