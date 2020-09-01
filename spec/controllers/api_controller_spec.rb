@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 describe ApiController, type: :controller do
+  let(:github_endpoint ) { FactoryBot.create(:endpoint, name: 'get_pull_requests', client_tag: 'github') }
+  let(:non_github_endpoint) { FactoryBot.create(:endpoint, client_tag: 'google', name: 'something_else') }
 
   describe '#list_endpoints' do
     context 'when called' do
       it 'should return json containing all available endpoints' do
+        github_endpoint.save
         get "list_endpoints"
         expect(response.status).to eq(200)
         expect(response.body).to eq(Endpoint.all.to_json)
@@ -14,10 +17,9 @@ describe ApiController, type: :controller do
     end
     
     context 'when called with parameters' do
-      let(:github_endpoint ) { FactoryBot.create(:endpoint, name: 'something') }
-      let(:non_github_endpoint) { FactoryBot.create(:endpoint, client_tag: google, name: 'something_else') }
       it 'should filter endpoints' do
-        get "list_endpoints", params: {client_tag: 'github'}
+        github_endpoint.save
+        post "list_endpoints", params: {client_tag: 'github'}
         body = JSON.parse(response.body)
         client_tags = body.map{|x| x['client_tag']}.uniq
         expect(client_tags.count).to eq(1)
@@ -32,6 +34,7 @@ describe ApiController, type: :controller do
                       request_name: 'get_pull_requests',
                       arguments: {owner: 'mabiesen', repo: 'rails_universal_api'}} }
       it 'should return status 200' do
+        github_endpoint.save
         post "validate_params", params: params
         expect(response.status).to eq(200)
       end
@@ -52,6 +55,7 @@ describe ApiController, type: :controller do
                         request_name: 'get_pull_requests',
                         arguments: ['mabiesen','universal_rails_api','closed']} }
       it 'should return json' do 
+        github_endpoint.save
         allow_any_instance_of(ApiController).to receive(:make_request).and_return( good_response )
         post "call", params: params
         parsed_body = JSON.parse(response.body)
@@ -64,6 +68,7 @@ describe ApiController, type: :controller do
 
     context 'when endpoint cannot be found' do
       it 'should return 404 status' do
+        github_endpoint.save
         post "call", params: {client_tag: 'dolittle', request_name: 'nothin'} 
         expect(response.status).to eq(404) 
       end
@@ -71,6 +76,7 @@ describe ApiController, type: :controller do
 
     context 'when request error occurs' do
       it 'should return 500 status' do
+        github_endpoint.save
         allow_any_instance_of(ApiController).to receive(:make_request).and_raise( 'custom error' )
         post "call", params: {client_tag: 'github', request_name: 'get_pull_requests', arguments: {foo: 'bar'}}
         expect(response.status).to eq(500)
