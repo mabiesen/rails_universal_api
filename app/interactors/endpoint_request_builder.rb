@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+STDOUT.sync = true
+
 # Houses logic to interface endpoints with job data
 class EndpointRequestBuilder
   attr_reader :params, :url_variables, :url_path, :body_template
@@ -38,7 +40,9 @@ class EndpointRequestBuilder
   def validate_param(param_name, data)
     optional = @params[param_name]['optional']
     data_type = @params[param_name]['type']
-    raise "No data supplied for column #{param_name}, column is not optional. puts #{data}" if !optional && data.nil?
+    puts "Validating param #{param_name}, type: #{data_type}, optional: #{optional}, data: #{data}"
+    raise "No data supplied for column #{param_name}, column is not optional.#{data}" if !optional && data.blank?
+    puts "no optionality error"
 
     return if data.nil?
 

@@ -9,23 +9,42 @@ RSpec.describe EndpointRequestBuilder do
 
   describe '#validate' do
     context 'when field data supplied cannot be coerced to parameter type' do
-      it 'should raise an error' do
-        expect{ builder.validate(['arg1','arg2']) }.to raise_error(/is not a valid/)
-        expect{ builder.validate({things: 'stuff', stuff: 'stuff'}) }.to raise_error(/is not a valid/)
+      context 'when supplied data is an array' do
+        it 'should raise an error' do
+          expect{ builder.validate(['arg1','arg2']) }.to raise_error(/is not a valid/)
+        end
+      end
+      context 'when supplied data is a hash' do
+        it 'should raise an error' do
+          expect{ builder.validate({things: 'stuff', stuff: 'stuff'}) }.to raise_error(/is not a valid/)
+        end
       end
     end
 
     context 'when field data is not optional and there is no data supplied' do
-      it 'should raise an error' do
-        expect{ builder.validate(['2020-09-13']) }.to raise_error(/is not optional/)
-        expect{ builder.validate({things: '2020-09-13'}) }.to raise_error(/is not optional/)
+      context 'when supplied data is array' do
+        it 'should raise an error' do
+          expect{ builder.validate(['2020-09-22']) }.to raise_error(/is not optional/)
+        end
+      end
+      context 'when supplied data is a hash' do
+        it 'should raise an error' do
+          expect{ builder.validate({things: '2020-09-23'}) }.to raise_error(/is not optional/)
+        end
       end
     end
 
     context 'when perfect' do
-      it 'should not raise errors' do
-        expect{ builder.validate(['2020-02-04','2020-10-29']) }.not_to raise_error
-        expect{ builder.validate({things: '2020-02-04', stuff: '2020-10-29'}) }.not_to raise_error
+      context 'when supplied data is array' do
+        it 'should not raise errors' do
+          expect{ builder.validate(['2020-02-04','2020-10-29']) }.not_to raise_error
+        end
+      end
+
+      context 'when supplied data is hash' do
+        it 'should not raise errors' do
+          expect{ builder.validate({things: '2020-02-04', stuff: '2020-10-29'}) }.not_to raise_error
+        end
       end
     end
   end
