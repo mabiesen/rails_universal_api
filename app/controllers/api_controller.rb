@@ -37,7 +37,7 @@ class ApiController < ApplicationController
       begin
         erb = EndpointRequestBuilder.new(@endpoint)
         erb.validate(@arguments)
-        render json: { success: 'Params look great!'}, status: 200
+        render json: { success: 'Params look great!' }, status: 200
       rescue StandardError => e
         render json: { error: e.to_s }, status: 500
       end
