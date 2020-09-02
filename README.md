@@ -29,7 +29,7 @@ http http://localhost:3000/call/github/get_pull_requests
 
 Completed 
 
-Super simple implementation.  All calls to endpoints (if successful) will  return benchmark information indicating how long it took to validate + buildrequest + reach API endpoint.  This should be used as an understanding of system health, and against an endpoint request baseline one could determine if there is an issue with the API provider. 
+Super simple implementation.  After request building and validations we perform the api call, Benchmark wraps the call and we add benchmark to the return body
 
 #### 2D to 3D data
 
