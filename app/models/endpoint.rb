@@ -13,12 +13,6 @@ class Endpoint < ApplicationRecord
   validates_with EndpointUrlPathValidator
   validates_with EndpointBodyTemplateValidator
 
-  has_many :batches
-
-  CLIENT_MAP = { 'github' => GITHUB_CLIENT,
-                 'newsapi' => NEWSAPI_CLIENT,
-                 'mailboxlayer' => MAILBOXLAYER_CLIENT }.freeze
-
   def url_variables
     url_path.split('/').select { |x| x.include?(':') }.map do |var|
       var.delete(':')
@@ -26,6 +20,7 @@ class Endpoint < ApplicationRecord
   end
 
   def client
-    CLIENT_MAP[client_tag]
+    # found in initializers
+    EndpointClientMap[client_tag]
   end
 end

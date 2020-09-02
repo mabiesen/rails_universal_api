@@ -1,7 +1,9 @@
 require 'faraday'
 require 'faraday_middleware'
 
-GITHUB_CONFIG = Rails.application.config_for(:github)
+client_tag = :github
+
+GITHUB_CONFIG = Rails.application.config_for(client_tag)
 
 GITHUB_CLIENT = Faraday.new(GITHUB_CONFIG['url']) do |f|
   f.request :retry
@@ -11,3 +13,6 @@ GITHUB_CLIENT = Faraday.new(GITHUB_CONFIG['url']) do |f|
   f.headers['Accept'] = 'application/vnd.github.v3+json'
   f.adapter :net_http
 end
+
+# add to mapping
+EndpointClientMap[client_tag] = GITHUB_CLIENT

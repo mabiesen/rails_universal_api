@@ -1,7 +1,9 @@
 require 'faraday'
 require 'faraday_middleware'
 
-NEWSAPI_CONFIG = Rails.application.config_for(:newsapi)
+client_tag = :news_api
+
+NEWSAPI_CONFIG = Rails.application.config_for(client_tag)
 
 NEWSAPI_CLIENT = Faraday.new(NEWSAPI_CONFIG['url']) do |f|
   f.request :retry
@@ -9,3 +11,6 @@ NEWSAPI_CLIENT = Faraday.new(NEWSAPI_CONFIG['url']) do |f|
   f.adapter :net_http
   f.headers['X-Api-Key'] = ENV['NEWSAPI_KEY']
 end
+
+# add to mapping
+EndpointClientMap[client_tag] = NEWSAPI_CLIENT
