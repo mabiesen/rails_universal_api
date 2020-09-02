@@ -15,5 +15,4 @@ class EndpointClient
       req.headers['Content-Type'] = 'application/json'
     end
   end
-
 end
