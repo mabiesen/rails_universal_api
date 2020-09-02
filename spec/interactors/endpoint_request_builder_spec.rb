@@ -8,6 +8,12 @@ RSpec.describe EndpointRequestBuilder do
 
 
   describe '#validate' do
+    context 'when supplied hash contains unincluded keys' do
+      it 'should raise error' do
+        expect{ builder.validate({owdner: 'stuff', stuff: 'stuff'}) }.to raise_error(/contains unidentified params/)
+      end
+    end
+
     context 'when field data supplied cannot be coerced to parameter type' do
       context 'when supplied data is a hash' do
         it 'should raise an error' do
