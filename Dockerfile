@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR $APP
 COPY Gemfile Gemfile.lock ./
-COPY .bundle $BUNDLE_APP_CONFIG/
 RUN gem install bundler:2.1.4
 RUN bundle install --binstubs
 RUN bundle install
