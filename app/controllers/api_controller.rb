@@ -15,7 +15,6 @@ class ApiController < ApplicationController
   # makes an api request
   def call
     render_endpoint_request {
-      response = nil
       benchmark, response = make_benchmarked_request
       render json: { benchmark: benchmark, status: response.status, body: response.body }, status: 200
     }
