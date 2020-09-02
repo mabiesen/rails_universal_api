@@ -31,12 +31,12 @@ describe ApiController, type: :controller do
 
   describe '#call' do
     context 'when called' do
-      let (:good_response) { Struct.new(:status, :body).new(350, 'some_json') }
+      let (:good_response) { [{'real': 2.7}, Struct.new(:status, :body).new(350, 'some_json')] }
       let (:params) { { client_tag: 'github',
                         request_name: 'test',
                         arguments: ['mabiesen','universal_rails_api','closed']} }
       it 'should return json' do 
-        allow_any_instance_of(ApiController).to receive(:make_request).and_return( good_response )
+        allow_any_instance_of(ApiController).to receive(:make_benchmarked_request).and_return( good_response )
         post "call", params: params
         parsed_body = JSON.parse(response.body)
         expect(parsed_body['status']).to eq(350)
@@ -55,7 +55,7 @@ describe ApiController, type: :controller do
 
     context 'when request error occurs' do
       it 'should return 500 status' do
-        allow_any_instance_of(ApiController).to receive(:make_request).and_raise( 'custom error' )
+        allow_any_instance_of(ApiController).to receive(:make_benchmarked_request).and_raise( 'custom error' )
         post "call", params: {client_tag: 'github', request_name: 'test', arguments: {foo: 'bar'}}
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).to eq('custom error')
