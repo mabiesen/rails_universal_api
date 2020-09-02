@@ -1,7 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 
-client_tag = :news_api
+client_tag = :newsapi
 
 NEWSAPI_CONFIG = Rails.application.config_for(client_tag)
 

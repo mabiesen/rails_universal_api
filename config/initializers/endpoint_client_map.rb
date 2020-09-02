@@ -9,7 +9,7 @@ class EndpointClientMap
     end
 
     def [](client_tag)
-      @@endpoint_client_map(key)
+      @@endpoint_client_map[client_tag]
     end
   end
 end
