@@ -34,7 +34,9 @@ describe ApiController, type: :controller do
       let (:good_response) { [{'real': 2.7}, Struct.new(:status, :body).new(350, 'some_json')] }
       let (:params) { { client_tag: 'github',
                         request_name: 'test',
-                        arguments: ['mabiesen','universal_rails_api','closed']} }
+                        owner: 'mabiesen',
+                        repo: 'universal_rails_api',
+                        state: 'closed'} }
       it 'should return json' do 
         allow_any_instance_of(ApiController).to receive(:make_benchmarked_request).and_return( good_response )
         post "call", params: params
@@ -56,7 +58,7 @@ describe ApiController, type: :controller do
     context 'when request error occurs' do
       it 'should return 500 status' do
         allow_any_instance_of(ApiController).to receive(:make_benchmarked_request).and_raise( 'custom error' )
-        post "call", params: {client_tag: 'github', request_name: 'test', arguments: {foo: 'bar'}}
+        post "call", params: {client_tag: 'github', request_name: 'test', foo: 'bar'}
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).to eq('custom error')
       end
@@ -67,17 +69,18 @@ describe ApiController, type: :controller do
     context 'when called successfully' do
       let (:params) { { client_tag: 'github',
                       request_name: 'test',
-                      arguments: {things: 'mabiesen'}} }
+                      things: 'mabiesen'} }
       it 'should return status 200' do
         post "validate_params", params: params
+        puts "params response body #{response.body}"
         expect(response.status).to eq(200)
       end
     end
 
     context 'when request error occurs' do
       let (:params) { { client_tag: 'github',
-                      request_name: 'test',
-                      arguments: {foo: 'bar'} } }
+                        request_name: 'test',
+                        foo: 'bar' } }
       it 'should return 500 status' do
         post "validate_params", params: params
         puts "Response body #{response.body}"
@@ -97,7 +100,7 @@ describe ApiController, type: :controller do
   describe '#validate_param' do
     context 'when called successfully' do
       it 'should return 200 response' do
-        post "validate_param", params: {client_tag: 'github', request_name: 'test', arguments: {things: 'mabiesen'}}
+        post "validate_param", params: {client_tag: 'github', request_name: 'test', things: 'mabiesen'}
         expect(response.status).to eq(200)
       end
     end
@@ -111,7 +114,7 @@ describe ApiController, type: :controller do
 
     context 'when request error occurs' do
       it 'should return 500 status' do
-        post "validate_param", params: {client_tag: 'github', request_name: 'test', arguments: {foo: 'bar'}}
+        post "validate_param", params: {client_tag: 'github', request_name: 'test', foo: 'bar'}
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).not_to be(nil)
       end

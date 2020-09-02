@@ -85,6 +85,6 @@ class ApiController < ApplicationController
 
   # array of arguments to be used in client call
   def set_arguments
-    @arguments = params[:arguments]
+    @arguments = request.request_parameters
   end
 end
