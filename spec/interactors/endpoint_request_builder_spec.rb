@@ -39,6 +39,32 @@ RSpec.describe EndpointRequestBuilder do
     end
   end
 
+  describe '#validate_param' do
+    context 'when called successfully' do
+      it 'should not error' do
+          expect{ builder.validate_param('things', '2020-02-04') }.not_to raise_error
+      end
+    end
+
+    context 'when called with bad param_name' do
+      it 'should raise error' do
+          expect{ builder.validate_param('gerblesnarf', 'stuff') }.to raise_error(/does not exist for endpoint/)
+      end
+    end
+
+    context 'when no value is supplied for a non-optional param' do
+      it 'should raise error' do
+          expect{ builder.validate_param('things', nil) }.to raise_error(/column is not optional/)
+      end
+    end
+
+    context 'when data in a column cannot be coerced to type' do
+      it 'should raise error' do
+          expect{ builder.validate_param('things', 'blarney') }.to raise_error(/is not a valid/)
+      end
+    end
+  end
+
   describe '#formatted_url_path' do
     context 'when supplied a hash of data' do
       it 'returns the interpolated url_path' do

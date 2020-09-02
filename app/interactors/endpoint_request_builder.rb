@@ -24,9 +24,10 @@ class EndpointRequestBuilder
   end
 
   def validate_param(param_name, data)
+    raise "Supplied param_name #{param_name} does not exist for endpoint" unless @params.key?(param_name)
+
     optional = @params[param_name]['optional']
     data_type = @params[param_name]['type']
-    raise "Supplied param_name #{param_name} does not exist for endpoint" unless @params.key?(param_name)
 
     raise "No data supplied for column #{param_name}, column is not optional.#{data}" if !optional && data.blank?
 
