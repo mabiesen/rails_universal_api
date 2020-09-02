@@ -14,57 +14,60 @@ class ApiController < ApplicationController
 
   # makes an api request
   def call
-    if @endpoint.nil?
-      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
-      render json: { error: error_string }, status: 404
-    else
-      begin
-        response = nil
-        benchmark = Benchmark.measure { response = make_request }
-        render json: { benchmark: benchmark, status: response.status, body: response.body }, status: 200
-      rescue StandardError => e
-        render json: { error: e.to_s }, status: 500
-      end
+    render_endpoint_request do
+      benchmark, response = make_benchmarked_request
+      render json: { benchmark: benchmark, status: response.status, body: response.body }, status: 200
     end
   end
 
   # validates all params relative to endpoint expectations
   def validate_params
-    if @endpoint.nil?
-      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
-      render json: { error: error_string }, status: 404
-    else
-      begin
-        erb = EndpointRequestBuilder.new(@endpoint)
-        erb.validate(@arguments)
-        render json: { success: 'Params look great!' }, status: 200
-      rescue StandardError => e
-        render json: { error: e.to_s }, status: 500
-      end
+    render_endpoint_request do
+      erb = EndpointRequestBuilder.new(@endpoint)
+      erb.validate(@arguments)
+      render json: { success: 'Params look great!' }, status: 200
     end
   end
 
   # validates one param in isolation
   def validate_param
+    render_endpoint_request do
+      erb = EndpointRequestBuilder.new(@endpoint)
+      erb.validate_param(@arguments.keys.first.to_s, @arguments.values.first)
+      render json: { success: 'Param looks like the right data type! good job!' }, status: 200
+    end
+  end
+
+  private
+
+  # wraps requests that contain endpoint instantiation to insure 404 not found
+  def render_endpoint_request
     if @endpoint.nil?
-      error_string = "no endpoint was found: #{params[:client_tag]} with request #{params[:request_name]}"
+      error_string = "no endpoint was found for client: #{params[:client_tag]} with request: #{params[:request_name]}"
       render json: { error: error_string }, status: 404
     else
       begin
-        erb = EndpointRequestBuilder.new(@endpoint)
-        erb.validate_param(@arguments.keys.first.to_s, @arguments.values.first)
-        render json: { success: 'Param looks great!' }, status: 200
+        yield
       rescue StandardError => e
         render json: { error: e.to_s }, status: 500
       end
     end
   end
 
-  private
+  def build_request
+    erb = EndpointRequestBuilder.new(@endpoint)
+    erb.validate(@arguments)
+    url_path = erb.formatted_url_path(@arguments)
+    extra_params = erb.extra_params(argument_array)
+    [url_path, extra_params]
+  end
 
-  def make_request
-    endpoint_client = EndpointClient.new(@endpoint)
-    endpoint_client.request(@arguments)
+  def make_benchmarked_request
+    url_path, extra_params = build_request
+    ec = EndpointClient.new(@endpoint)
+    response = nil
+    benchmark = Benchmark.measure { response = ec.request(url_path, extra_params) }
+    [benchmark, response]
   end
 
   # endpoint is defined by its client and name
