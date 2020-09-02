@@ -8,6 +8,12 @@ RSpec.describe EndpointRequestBuilder do
 
 
   describe '#validate' do
+    context 'when supplied hash contains unincluded keys' do
+      it 'should raise error' do
+        expect{ builder.validate({owdner: 'stuff', stuff: 'stuff'}) }.to raise_error(/contains unidentified params/)
+      end
+    end
+
     context 'when field data supplied cannot be coerced to parameter type' do
       context 'when supplied data is a hash' do
         it 'should raise an error' do
@@ -29,6 +35,32 @@ RSpec.describe EndpointRequestBuilder do
         it 'should not raise errors' do
           expect{ builder.validate({things: '2020-02-04', stuff: '2020-10-29'}) }.not_to raise_error
         end
+      end
+    end
+  end
+
+  describe '#validate_param' do
+    context 'when called successfully' do
+      it 'should not error' do
+          expect{ builder.validate_param('things', '2020-02-04') }.not_to raise_error
+      end
+    end
+
+    context 'when called with bad param_name' do
+      it 'should raise error' do
+          expect{ builder.validate_param('gerblesnarf', 'stuff') }.to raise_error(/does not exist for endpoint/)
+      end
+    end
+
+    context 'when no value is supplied for a non-optional param' do
+      it 'should raise error' do
+          expect{ builder.validate_param('things', nil) }.to raise_error(/column is not optional/)
+      end
+    end
+
+    context 'when data in a column cannot be coerced to type' do
+      it 'should raise error' do
+          expect{ builder.validate_param('things', 'blarney') }.to raise_error(/is not a valid/)
       end
     end
   end
