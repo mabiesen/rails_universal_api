@@ -21,6 +21,6 @@ class Endpoint < ApplicationRecord
 
   def client
     # found in initializers
-    EndpointClientMap[client_tag.to_sym]
+    ApiClientMap[client_tag.to_sym]
   end
 end

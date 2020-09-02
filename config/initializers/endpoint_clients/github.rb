@@ -15,4 +15,4 @@ GITHUB_CLIENT = Faraday.new(GITHUB_CONFIG['url']) do |f|
 end
 
 # add to mapping
-EndpointClientMap[client_tag] = GITHUB_CLIENT
+ApiClientMap[client_tag] = GITHUB_CLIENT

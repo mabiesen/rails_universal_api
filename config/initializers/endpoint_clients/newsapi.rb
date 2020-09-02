@@ -13,4 +13,4 @@ NEWSAPI_CLIENT = Faraday.new(NEWSAPI_CONFIG['url']) do |f|
 end
 
 # add to mapping
-EndpointClientMap[client_tag] = NEWSAPI_CLIENT
+ApiClientMap[client_tag] = NEWSAPI_CLIENT

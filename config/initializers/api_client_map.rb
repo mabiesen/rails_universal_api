@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-class EndpointClientMap
+class ApiClientMap
   @@endpoint_client_map = {}
   class << self
 

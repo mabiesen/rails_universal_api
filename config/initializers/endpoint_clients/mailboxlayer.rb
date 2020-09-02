@@ -13,4 +13,4 @@ MAILBOXLAYER_CLIENT = Faraday.new(MAILBOXLAYER_CONFIG['url']) do |f|
 end
 
 # add to mapping
-EndpointClientMap[client_tag] = MAILBOXLAYER_CLIENT
+ApiClientMap[client_tag] = MAILBOXLAYER_CLIENT
