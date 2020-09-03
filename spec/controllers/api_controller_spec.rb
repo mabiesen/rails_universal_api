@@ -72,7 +72,6 @@ describe ApiController, type: :controller do
                       things: 'mabiesen'} }
       it 'should return status 200' do
         post "validate_params", params: params
-        puts "params response body #{response.body}"
         expect(response.status).to eq(200)
       end
     end
@@ -83,7 +82,6 @@ describe ApiController, type: :controller do
                         foo: 'bar' } }
       it 'should return 500 status' do
         post "validate_params", params: params
-        puts "Response body #{response.body}"
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).not_to be(nil)
       end
@@ -117,6 +115,20 @@ describe ApiController, type: :controller do
         post "validate_param", params: {client_tag: 'github', request_name: 'test', foo: 'bar'}
         expect(response.status).to eq(500)
         expect(JSON.parse(response.body)['error']).not_to be(nil)
+      end
+    end
+  end
+
+  describe '#build_request' do
+    context 'when called' do
+      let(:controller_instance) { ApiController.new }
+      let(:params) { {things: 'mabiesen'} }
+      it 'should return array containing not_blank url_path and extra_params' do
+        controller_instance.instance_variable_set("@arguments", params) 
+        controller_instance.instance_variable_set("@endpoint", github_endpoint)
+        ans = controller_instance.send(:build_request)
+        expect(ans.count).to eq(2)
+        expect(ans.compact.count).to eq(2)
       end
     end
   end
