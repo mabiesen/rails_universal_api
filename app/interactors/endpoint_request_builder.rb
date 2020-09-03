@@ -42,7 +42,7 @@ class EndpointRequestBuilder
   # validation occurs at the parameter collection and individual parameter level
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    raise 'input contains unidentified params' unless data_hash.keys.all? { |k| @params.key?(k) }
+    raise "input contains unidentified params.\nParams received: #{data_hash.keys}\n\n Params expected: #{@params.keys}" unless data_hash.keys.all? { |k| @params.key?(k) }
 
     @params.each do |key, _|
       validate_param(key, data_hash[key])

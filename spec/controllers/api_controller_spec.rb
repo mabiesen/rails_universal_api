@@ -121,4 +121,17 @@ describe ApiController, type: :controller do
     end
   end
 
+  describe '#build_request' do
+    context 'when called' do
+      let(:controller_instance) { ApiController.new }
+      let(:params) { {client_tag: 'github', request_name: 'test', things: 'mabiesen'} }
+      it 'should return array containing not_blank url_path and extra_params' do
+        controller_instance.instance_variable_set("@arguments", params) 
+        controller_instance.instance_variable_set("@endpoint", github_endpoint)
+        ans = controller_instance.send(:build_request)
+        expect(ans.count).to eq(2)
+      end
+    end
+  end
+
 end
