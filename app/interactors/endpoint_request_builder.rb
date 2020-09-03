@@ -43,8 +43,8 @@ class EndpointRequestBuilder
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
     unidentified_key_error = "input contains unidentified params.\n"\
-                            "Params received:\n#{data_hash.keys}\n\n"\
-                            "Params expected/allowed:\n#{@params.keys}"
+                             "Params received:\n#{data_hash.keys}\n\n"\
+                             "Params expected/allowed:\n#{@params.keys}"
     raise unidentified_key_error unless data_hash.keys.all? { |k| @params.key?(k) }
 
     @params.each do |key, _|
@@ -69,10 +69,13 @@ class EndpointRequestBuilder
     final_hash = {}
     extra_keys = @params.keys - @url_variables
     extra_keys.each do |key|
-      final_hash[key] = data_hash[key]
+      data_type = @params[key]['type']
+      final_hash[key] = format_data_for_json(data_hash[key], data_type)
     end
-    final_hash = populate_body_template(final_hash) unless @body_template.nil?
-    final_hash.compact
+    final_hash = HashHelper.remove_blanks_from_hash(final_hash)
+    return final_hash if @body_template.nil?
+
+    populate_body_template(final_hash)
   end
 
   def valid_data_for_type?(data, data_type)
