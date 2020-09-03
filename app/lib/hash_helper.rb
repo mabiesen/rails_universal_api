@@ -5,6 +5,10 @@ require 'hashie'
 module HashHelper
   module_function
 
+  def remove_blanks_from_hash(regular_hsh)
+    remove_blanks_from_nested_hash(regular_hsh)
+  end
+
   # api calls often require the use of nested hashes
   # for many use-cases, the consumer should not be provided
   # a nested form: the consumer should be provided a 2d interface

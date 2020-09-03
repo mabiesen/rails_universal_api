@@ -4,19 +4,6 @@ require 'rails_helper'
 
 RSpec.describe StringHelper do
 
-  describe '#string_is_valid_string?' do
-    context 'when supplied string with empty quotes' do
-      it 'returns false' do
-        expect(StringHelper.string_is_valid_string?('')).to be(false)
-      end
-    end
-    context 'when supplied string with content' do
-      it 'returns true' do
-        expect(StringHelper.string_is_valid_string?('test')).to be(true)
-      end
-    end
-  end
-
   describe '#string_is_valid_boolean?' do
     context "when supplied 'true' or 'false'" do
       it 'returns true' do
