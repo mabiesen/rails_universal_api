@@ -89,6 +89,6 @@ class ApiController < ApplicationController
   def set_arguments
     exclusion_list = %w[client_tag api request_name]
     all_parameters = request.request_parameters
-    @arguments = all_parameters.reject{|param_name, _| exclusion_list.include?(param_name) }
+    @arguments = all_parameters.reject { |param_name, _| exclusion_list.include?(param_name) }
   end
 end
