@@ -14,7 +14,7 @@
       <img src="./assets/0.12.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-09-03T02:47:36-05:00">2020-09-03T02:47:36-05:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-09-03T02:55:00-05:00">2020-09-03T02:55:00-05:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  93.52%
+  93.54%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         15.45
+         15.42
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>293</b> relevant lines,
-    <span class="green"><b>274</b> lines covered</span> and
+    <b>294</b> relevant lines,
+    <span class="green"><b>275</b> lines covered</span> and
     <span class="red"><b>19</b> lines missed. </span>
     (<span class="green">
-  93.52%
+  93.54%
 </span>
 )
   </div>
@@ -116,12 +116,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#d9d18740d47347389f12a489751a090bc8ccb26a" class="src_link" title="app/interactors/endpoint_request_builder.rb">app/interactors/endpoint_request_builder.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">91.67 %</td>
-            <td class="cell--number">89</td>
-            <td class="cell--number">48</td>
-            <td class="cell--number">44</td>
+            <td class="green strong cell--number t-file__coverage">91.84 %</td>
+            <td class="cell--number">92</td>
+            <td class="cell--number">49</td>
+            <td class="cell--number">45</td>
             <td class="cell--number">4</td>
-            <td class="cell--number">5.81</td>
+            <td class="cell--number">5.84</td>
             
           </tr>
         
@@ -854,14 +854,14 @@
     <span class="group_name">Ungrouped</span>
     (<span class="covered_percent">
       <span class="green">
-  93.1%
+  93.22%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         5.16
+         5.19
        </span>
     </span> hits/line
     )
@@ -874,11 +874,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>58</b> relevant lines,
-    <span class="green"><b>54</b> lines covered</span> and
+    <b>59</b> relevant lines,
+    <span class="green"><b>55</b> lines covered</span> and
     <span class="red"><b>4</b> lines missed. </span>
     (<span class="green">
-  93.1%
+  93.22%
 </span>
 )
   </div>
@@ -914,12 +914,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#d9d18740d47347389f12a489751a090bc8ccb26a" class="src_link" title="app/interactors/endpoint_request_builder.rb">app/interactors/endpoint_request_builder.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">91.67 %</td>
-            <td class="cell--number">89</td>
-            <td class="cell--number">48</td>
-            <td class="cell--number">44</td>
+            <td class="green strong cell--number t-file__coverage">91.84 %</td>
+            <td class="cell--number">92</td>
+            <td class="cell--number">49</td>
+            <td class="cell--number">45</td>
             <td class="cell--number">4</td>
-            <td class="cell--number">5.81</td>
+            <td class="cell--number">5.84</td>
             
           </tr>
         
@@ -2399,7 +2399,7 @@
     <h3>app/interactors/endpoint_request_builder.rb</h3>
     <h4>
       <span class="green">
-  91.67%
+  91.84%
 </span>
 
       lines covered
@@ -2408,8 +2408,8 @@
     
 
     <div class="t-line-summary">
-      <b>48</b> relevant lines.
-      <span class="green"><b>44</b> lines covered</span> and
+      <b>49</b> relevant lines.
+      <span class="green"><b>45</b> lines covered</span> and
       <span class="red"><b>4</b> lines missed.</span>
     </div>
 
@@ -2905,46 +2905,46 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="16" data-linenumber="45">
-            <span class="hits">16</span>
+          <li class="never" data-hits="" data-linenumber="45">
+            
             
 
             
 
-            <code class="ruby">    raise &quot;input contains unidentified params.\nParams received: #{data_hash.keys}\n\n Params expected: #{@params.keys}&quot; unless data_hash.keys.all? { |k| @params.key?(k) }</code>
+            <code class="ruby">    unidentified_key_error = &quot;input contains unidentified params.\n&quot;\</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="46">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="5" data-linenumber="47">
-            <span class="hits">5</span>
-            
-
-            
-
-            <code class="ruby">    @params.each do |key, _|</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="7" data-linenumber="48">
+          <li class="covered" data-hits="7" data-linenumber="46">
             <span class="hits">7</span>
             
 
             
 
-            <code class="ruby">      validate_param(key, data_hash[key])</code>
+            <code class="ruby">                            &quot;Params received:\n#{data_hash.keys}\n\n&quot;\</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="47">
+            
+            
+
+            
+
+            <code class="ruby">                            &quot;Params expected/allowed:\n#{@params.keys}&quot;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="16" data-linenumber="48">
+            <span class="hits">16</span>
+            
+
+            
+
+            <code class="ruby">    raise unidentified_key_error unless data_hash.keys.all? { |k| @params.key?(k) }</code>
           </li>
         </div>
       
@@ -2955,29 +2955,29 @@
 
             
 
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="50">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="51">
-            
-            
-
-            
-
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="5" data-linenumber="50">
+            <span class="hits">5</span>
+            
+
+            
+
+            <code class="ruby">    @params.each do |key, _|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="7" data-linenumber="51">
+            <span class="hits">7</span>
+            
+
+            
+
+            <code class="ruby">      validate_param(key, data_hash[key])</code>
           </li>
         </div>
       
@@ -2988,12 +2988,45 @@
 
             
 
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="53">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="54">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="55">
+            
+            
+
+            
+
             <code class="ruby">  # interpolate url parameters with real data</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="53">
+          <li class="covered" data-hits="1" data-linenumber="56">
             <span class="hits">1</span>
             
 
@@ -3004,7 +3037,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="54">
+          <li class="covered" data-hits="5" data-linenumber="57">
             <span class="hits">5</span>
             
 
@@ -3015,7 +3048,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="55">
+          <li class="covered" data-hits="5" data-linenumber="58">
             <span class="hits">5</span>
             
 
@@ -3026,7 +3059,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="56">
+          <li class="covered" data-hits="5" data-linenumber="59">
             <span class="hits">5</span>
             
 
@@ -3037,7 +3070,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="57">
+          <li class="covered" data-hits="5" data-linenumber="60">
             <span class="hits">5</span>
             
 
@@ -3048,7 +3081,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -3059,7 +3092,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="59">
+          <li class="covered" data-hits="5" data-linenumber="62">
             <span class="hits">5</span>
             
 
@@ -3070,7 +3103,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="60">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -3081,7 +3114,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="61">
+          <li class="never" data-hits="" data-linenumber="64">
             
             
 
@@ -3092,7 +3125,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="65">
             
             
 
@@ -3103,7 +3136,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="63">
+          <li class="never" data-hits="" data-linenumber="66">
             
             
 
@@ -3114,7 +3147,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="64">
+          <li class="covered" data-hits="1" data-linenumber="67">
             <span class="hits">1</span>
             
 
@@ -3125,7 +3158,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="65">
+          <li class="covered" data-hits="6" data-linenumber="68">
             <span class="hits">6</span>
             
 
@@ -3136,7 +3169,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="66">
+          <li class="covered" data-hits="6" data-linenumber="69">
             <span class="hits">6</span>
             
 
@@ -3147,7 +3180,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="67">
+          <li class="covered" data-hits="6" data-linenumber="70">
             <span class="hits">6</span>
             
 
@@ -3158,7 +3191,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="68">
+          <li class="covered" data-hits="6" data-linenumber="71">
             <span class="hits">6</span>
             
 
@@ -3169,7 +3202,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="69">
+          <li class="covered" data-hits="2" data-linenumber="72">
             <span class="hits">2</span>
             
 
@@ -3180,7 +3213,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="70">
+          <li class="never" data-hits="" data-linenumber="73">
             
             
 
@@ -3191,7 +3224,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="71">
+          <li class="covered" data-hits="6" data-linenumber="74">
             <span class="hits">6</span>
             
 
@@ -3202,7 +3235,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="72">
+          <li class="covered" data-hits="6" data-linenumber="75">
             <span class="hits">6</span>
             
 
@@ -3213,46 +3246,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="73">
+          <li class="never" data-hits="" data-linenumber="76">
             
             
 
             
 
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="74">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="75">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def valid_data_for_type?(data, data_type)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="9" data-linenumber="76">
-            <span class="hits">9</span>
-            
-
-            
-
-            <code class="ruby">    StringHelper.string_can_be_coerced_to_class?(data, data_type)</code>
           </li>
         </div>
       
@@ -3263,40 +3263,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="78">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="79">
+          <li class="covered" data-hits="1" data-linenumber="78">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def format_data_for_json(value, type)</code>
+            <code class="ruby">  def valid_data_for_type?(data, data_type)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="80">
+          <li class="covered" data-hits="9" data-linenumber="79">
+            <span class="hits">9</span>
+            
+
+            
+
+            <code class="ruby">    StringHelper.string_can_be_coerced_to_class?(data, data_type)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="80">
             
             
 
             
 
-            <code class="ruby">    return value unless %w[Integer Boolean Float].include?(type)</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3312,24 +3312,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="82">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="82">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    StringHelper.coerce_string_to_class(value, type)</code>
+            
+
+            <code class="ruby">  def format_data_for_json(value, type)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="83">
+          <li class="missed" data-hits="0" data-linenumber="83">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    return value unless %w[Integer Boolean Float].include?(type)</code>
           </li>
         </div>
       
@@ -3345,40 +3345,18 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="85">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="85">
+            
             
 
             
 
-            <code class="ruby">  def populate_body_template(data_hash)</code>
+            <code class="ruby">    StringHelper.coerce_string_to_class(value, type)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="86">
-            
-            
-
-            
-
-            <code class="ruby">    hsh = HashHelper.replace_nested_hash_values_using_hash(@body_template.deep_dup, data_hash)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="87">
-            
-            
-
-            
-
-            <code class="ruby">    HashHelper.remove_blanks_from_nested_hash(hsh)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="88">
+          <li class="never" data-hits="" data-linenumber="86">
             
             
 
@@ -3389,7 +3367,62 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="89">
+          <li class="never" data-hits="" data-linenumber="87">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="88">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def populate_body_template(data_hash)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="89">
+            
+            
+
+            
+
+            <code class="ruby">    hsh = HashHelper.replace_nested_hash_values_using_hash(@body_template.deep_dup, data_hash)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="90">
+            
+            
+
+            
+
+            <code class="ruby">    HashHelper.remove_blanks_from_nested_hash(hsh)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="91">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="92">
             
             
 
