@@ -83,8 +83,12 @@ class ApiController < ApplicationController
                          .where('name like ?', "%#{params[:request_name]}%")
   end
 
-  # array of arguments to be used in client call
+  # hash of arguments to be used in client call
+  # we are rejecting parameters which are either
+  # 1) part of url path, 2) rails(httpie?) magicky idk what 'api' var
   def set_arguments
-    @arguments = request.request_parameters
+    exclusion_list = %w[client_tag api request_name]
+    all_parameters = request.request_parameters
+    @arguments = all_parameters.reject { |param_name, _| exclusion_list.include?(param_name) }
   end
 end
