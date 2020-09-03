@@ -58,7 +58,7 @@ class ApiController < ApplicationController
     erb = EndpointRequestBuilder.new(@endpoint)
     erb.validate(@arguments)
     url_path = erb.formatted_url_path(@arguments)
-    extra_params = erb.extra_params(argument_array)
+    extra_params = erb.extra_params(@arguments)
     [url_path, extra_params]
   end
 
