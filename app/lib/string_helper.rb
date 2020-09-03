@@ -19,7 +19,7 @@ module StringHelper
   end
 
   def string_is_valid_string?(string)
-    string != ''
+    true
   end
 
   def string_is_valid_boolean?(string)
@@ -58,7 +58,7 @@ module StringHelper
     when 'String'
       string
     when 'Boolean'
-      string == 'true'
+      string.downcase == 'true'
     when 'Date'
       Date.parse(string)
     when 'Float'
