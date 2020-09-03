@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   
   # UI related
-
   get '/', to: 'home#index'
-
+  get '/endpoint/:endpoint_id', to: 'home#endpoint'
 
   # API related
   default_format = { :format => 'json' }

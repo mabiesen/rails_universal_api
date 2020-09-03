@@ -1,0 +1,18 @@
+<% params = @endpoint.params %>
+<% url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
+<form action="<%= url %>" method="post">
+  <%  params.each do |param_name, _| %>
+    <div class="field">
+      <label for="<%= param_name.to_s %>">
+        <%= param_name.to_s.capitalize %>
+      </label>
+      <br>
+      <input type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>">
+      <br>
+      <br>
+    </div>
+  <% end %>
+  <div class="actions">
+    <input type="submit" value="Submit">
+  </div>
+</form>
