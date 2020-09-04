@@ -1,4 +1,5 @@
 class AddGithubPullRequestEndpoint < ActiveRecord::Migration[5.2]
+
   def up
     Endpoint.new(name: 'get_pull_requests',
                  url_path: '/repos/:owner/:repo/pulls',
