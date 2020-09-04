@@ -1,16 +1,15 @@
 class AddGithubPullRequestEndpoint < ActiveRecord::Migration[5.2]
+
   def up
-    Endpoint.new(name: 'get_current_weather',
-                 url_path: '/v1/current.json',
-                 params: {q: {type:'String', optional: false},
-                          days: {type:'Integer', optional: true},
-                          dt: {type: 'Date', optional: true},
-                          unixdt: {type: 'Integer', optional: true},
-                          end_dt: {type: 'Date', optional: true},
-                          unixend_dt: {type: 'Integer', optional: true},
-                          hour: {type: 'Integer', optional: true},
-                          lang: {type: 'String', optional: true}},
-                    client_tag: 'weatherapi',
+    Endpoint.new(name: 'get_pull_requests',
+                 url_path: '/repos/:owner/:repo/pulls',
+                 params: {owner: {type:'String', optional: false},
+                          repo: {type:'String', optional: false},
+                          state: {type: 'String', optional: true},
+                          head: {type: 'String', optional: true},
+                          sort: {type: 'String', optional: true},
+                          direction: {type: 'String', optional: true}},
+                    client_tag: 'github',
                     request_method: 'get',
                     body_template: nil).save!
   end
