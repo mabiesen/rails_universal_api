@@ -3,9 +3,23 @@
 require 'rails_helper'
 
 RSpec.describe EndpointRequestBuilder do
-  let(:endpoint) { FactoryBot.create(:endpoint, url_path: '/v1/stuff/:things', params: {things: {optional: false, type: 'Date'}, stuff: {optional:false, type: 'Date'}}) }
+  let(:endpoint) { FactoryBot.create(:endpoint, 
+                                     url_path: '/v1/stuff/:things', 
+                                     params: {things: {optional: false, type: 'Date'},
+                                              stuff: {optional:false, type: 'Date'}}) }
+
   let(:builder) { EndpointRequestBuilder.new(endpoint)  }
 
+  let(:test_data_hash) { { 'String' => 'a_string',
+                           'Date' => '2020-12-27',
+                           'Boolean' => 'true',
+                           'Integer' => '209',
+                           'Float' => '30.33'} }
+
+  def change_param_type(endpoint, param_name, type)
+    endpoint.params[param_name]['type'] = type
+    endpoint.save!
+  end
 
   describe '#validate' do
     context 'when supplied hash contains unincluded keys' do
@@ -15,26 +29,31 @@ RSpec.describe EndpointRequestBuilder do
     end
 
     context 'when field data supplied cannot be coerced to parameter type' do
-      context 'when supplied data is a hash' do
-        it 'should raise an error' do
-          expect{ builder.validate({things: 'stuff', stuff: 'stuff'}) }.to raise_error(/is not a valid/)
+      it 'should raise an error if provided value of another type' do
+        transferrable_datatypes = ['Integer', 'Float']
+        test_data_hash.each do |type, value|
+          test_data_hash.each do |key, _|
+            change_param_type(endpoint, 'things', key)
+            builder = EndpointRequestBuilder.new(endpoint)
+            if type == key || key == 'String' || (key == 'Float' && type == 'Integer') 
+              expect{ builder.validate({things: value, stuff: '2020-11-23'}) }.not_to raise_error
+            else
+              expect{ builder.validate({things: value, stuff: '2020-11-23'}) }.to raise_error(/is not a valid/)
+            end
+          end
         end
       end
     end
 
     context 'when field data is not optional and there is no data supplied' do
-      context 'when supplied data is a hash' do
-        it 'should raise an error' do
-          expect{ builder.validate({things: '2020-09-23'}) }.to raise_error(/is not optional/)
-        end
+      it 'should raise an error' do
+        expect{ builder.validate({things: '2020-09-23'}) }.to raise_error(/is not optional/)
       end
     end
 
     context 'when perfect' do
-      context 'when supplied data is hash' do
-        it 'should not raise errors' do
-          expect{ builder.validate({things: '2020-02-04', stuff: '2020-10-29'}) }.not_to raise_error
-        end
+      it 'should not raise errors' do
+        expect{ builder.validate({things: '2020-02-04', stuff: '2020-10-29'}) }.not_to raise_error
       end
     end
   end
@@ -78,6 +97,12 @@ RSpec.describe EndpointRequestBuilder do
   end
 
   describe '#extra_params' do
+
+    it 'should return hash with stringified keys' do
+      extra_params = builder.extra_params({things: '2020-02-04'})
+      expect(extra_params).to be_a(Hash)
+    end
+
     context 'when supplied a hash of data equalling number of url variables' do
       it 'returns an empty hash' do
         extra_params = builder.extra_params({things: '2020-02-04'})
@@ -86,7 +111,14 @@ RSpec.describe EndpointRequestBuilder do
       end
     end
 
-    context 'when supplied an array of data with count greater than url variable count' do
+    context 'when supplied hash contains nil values' do
+      it 'returns hash with out nil values' do
+        extra_params = builder.extra_params({things: nil, stuff: 'dude'})
+        expect(extra_params).to eq({'stuff' => 'dude'})
+      end
+    end
+
+    context 'when supplied an hash of data with key count greater than url variable count' do
       it 'returns hash containing data converted to param type' do
         extra_params = builder.extra_params({stuff: '2020-02-04', things: '2020-10-29'})
         expect(extra_params).to be_a(Hash)
@@ -95,4 +127,5 @@ RSpec.describe EndpointRequestBuilder do
     end
 
   end
+
 end

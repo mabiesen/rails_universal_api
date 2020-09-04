@@ -6,27 +6,32 @@ module StringHelper
   def string_can_be_coerced_to_class?(string, type)
     case type
     when 'String'
-      string_is_valid_string?(string)
+      ans = string_is_valid_string?(string)
     when 'Boolean'
-      string_is_valid_boolean?(string)
+      ans = string_is_valid_boolean?(string)
     when 'Date'
-      string_is_valid_date?(string)
+      ans = string_is_valid_date?(string)
     when 'Float'
-      string_is_valid_float?(string)
+      ans = string_is_valid_float?(string)
     when 'Integer'
-      string_is_valid_integer?(string)
+      ans = string_is_valid_integer?(string)
     end
+    puts ans
+    return ans
   end
 
   def string_is_valid_string?(_string)
+    puts "evaluating #{_string} for string"
     true
   end
 
   def string_is_valid_boolean?(string)
+    puts "evaluating #{string} for bool"
     %w[true false].include?(string.downcase)
   end
 
   def string_is_valid_date?(string)
+    puts "evaluating #{string} for date"
     format_ok = string.match(/\d{4}-\d{2}-\d{2}/)
     begin
       parseable = Date.strptime(string, '%Y-%m-%d')
@@ -40,6 +45,7 @@ module StringHelper
   end
 
   def string_is_valid_float?(string)
+    puts "evaluating #{string} for float"
     Float(string)
     true
   rescue StandardError
@@ -47,6 +53,7 @@ module StringHelper
   end
 
   def string_is_valid_integer?(string)
+    puts "evaluating #{string} for integer"
     Integer(string)
     true
   rescue StandardError

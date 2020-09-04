@@ -70,7 +70,7 @@ class EndpointRequestBuilder
     final_hash = {}
     extra_keys = @params.keys - @url_variables
     extra_keys.each do |key|
-      next if data_hash[key].nil?
+      next if data_hash[key].blank?
 
       data_type = @params[key]['type']
       final_hash[key] = format_data_for_json(data_hash[key], data_type)
