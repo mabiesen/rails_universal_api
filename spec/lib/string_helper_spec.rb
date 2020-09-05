@@ -10,6 +10,22 @@ RSpec.describe StringHelper do
                            'Integer' => '209',
                            'Float' => '30.33'} }
 
+  describe '#string_can_be_coerced_to_class' do
+    context 'when called with uppercase type' do
+      it 'should process the request successfull' do
+        ans = StringHelper.string_can_be_coerced_to_class?('true', 'DATE')
+        expect(ans).to be_a(FalseClass)
+      end
+    end
+
+    context 'when called with mixed case type' do
+      it 'should process the request successfully' do
+        ans = StringHelper.string_can_be_coerced_to_class?('2020-12-23', 'DaTe')
+        expect(ans).to be_a(TrueClass)
+      end
+    end
+  end
+
   describe '#string_is_valid_boolean?' do
     context "when supplied 'true' or 'false' strings, with any cpitalization" do
       it 'returns true' do
