@@ -4,15 +4,27 @@ require 'rails_helper'
 
 RSpec.describe StringHelper do
 
+  let(:test_data_hash) { { 'String' => 'a_string',
+                           'Date' => '2020-12-27',
+                           'Boolean' => 'true',
+                           'Integer' => '209',
+                           'Float' => '30.33'} }
+
   describe '#string_is_valid_boolean?' do
-    context "when supplied 'true' or 'false'" do
+    context "when supplied 'true' or 'false' strings, with any cpitalization" do
       it 'returns true' do
         expect(StringHelper.string_is_valid_boolean?('true')).to be(true)
+        expect(StringHelper.string_is_valid_boolean?('false')).to be(true)
+        expect(StringHelper.string_is_valid_boolean?('FaLse')).to be(true)
       end
     end
     context "when supplied a value that is not 'true' or 'false'" do
       it 'returns false' do
-        expect(StringHelper.string_is_valid_boolean?('test')).to be(false)
+        test_data_hash.each do |key, value|
+          next if key == 'Boolean'
+
+          expect(StringHelper.string_is_valid_boolean?(value)).to be(false)
+        end
       end
     end
   end
@@ -25,7 +37,11 @@ RSpec.describe StringHelper do
     end
     context 'when supplied a non-parseable date' do
       it 'returns false' do
-        expect(StringHelper.string_is_valid_date?('grkjl')).to be(false)
+        test_data_hash.each do |key, value|
+          next if key == 'Date'
+
+          expect(StringHelper.string_is_valid_date?(value)).to be(false)
+        end
       end
     end
   end
@@ -38,7 +54,11 @@ RSpec.describe StringHelper do
     end
     context 'when supplied a string that cannot be parsed into a float' do
       it 'returns false' do
-        expect(StringHelper.string_is_valid_float?('test')).to be(false)
+        test_data_hash.each do |key, value|
+          next if key == 'Float' || key == 'Integer'
+
+          expect(StringHelper.string_is_valid_float?(value)).to be(false)
+        end
       end
     end
   end
@@ -51,7 +71,11 @@ RSpec.describe StringHelper do
     end
     context 'when supplied a string that cannot be parsed into an integer' do
       it 'returns false' do
-        expect(StringHelper.string_is_valid_integer?('test')).to be(false)
+        test_data_hash.each do |key, value|
+          next if key == 'Integer' || key == 'Float'
+
+          expect(StringHelper.string_is_valid_integer?(value)).to be(false)
+        end
       end
     end
   end
