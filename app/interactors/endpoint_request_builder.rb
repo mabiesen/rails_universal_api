@@ -24,28 +24,27 @@ class EndpointRequestBuilder
   end
 
   def validate_param(param_name, data)
-    raise "Supplied param_name #{param_name} does not exist for endpoint" unless @params.key?(param_name)
+    raise error_unidentified_param(param_name) unless @params.key?(param_name)
 
     optional = @params[param_name]['optional']
     data_type = @params[param_name]['type']
 
-    raise "No data supplied for column #{param_name}, column is not optional.#{data}" if !optional && data.blank?
+    raise error_required_param_blank(param_name) if !optional && data.blank?
 
     return if data.nil?
 
-    raise "Data in column #{param_name} is not a valid #{data_type}" unless valid_data_for_type?(data, data_type)
+    raise error_bad_data_type(param_name, data_type, data) unless valid_data_for_type?(data, data_type)
   end
 
   private
 
-  # validate inputs
   # validation occurs at the parameter collection and individual parameter level
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    unidentified_key_error = "input contains unidentified params.\n"\
-                             "Params received:\n#{data_hash.keys}\n\n"\
-                             "Params expected/allowed:\n#{@params.keys}"
-    raise unidentified_key_error unless data_hash.keys.all? { |k| @params.key?(k) }
+    all_keys_in_params = data_hash.keys.all? do |k|
+      @params.key?(k)
+    end
+    raise error_unidentified_params(data_hash.keys) unless all_keys_in_params
 
     @params.each do |key, _|
       validate_param(key, data_hash[key])
@@ -64,15 +63,18 @@ class EndpointRequestBuilder
 
   # identify parameters that are beyond the scope of url interpolation
   # convert 2d to 3d data if necessary
+  # the hash that is returned should never values that were initially nil
+  # the hash that is returned should never nil values in general
   def extra_params_for_hash(data_hash)
     data_hash = data_hash.stringify_keys
     final_hash = {}
     extra_keys = @params.keys - @url_variables
     extra_keys.each do |key|
+      next if data_hash[key].blank?
+
       data_type = @params[key]['type']
       final_hash[key] = format_data_for_json(data_hash[key], data_type)
     end
-    final_hash = HashHelper.remove_blanks_from_hash(final_hash)
     return final_hash if @body_template.nil?
 
     populate_body_template(final_hash)
@@ -91,5 +93,26 @@ class EndpointRequestBuilder
   def populate_body_template(data_hash)
     hsh = HashHelper.replace_nested_hash_values_using_hash(@body_template.deep_dup, data_hash)
     HashHelper.remove_blanks_from_nested_hash(hsh)
+  end
+
+  def error_unidentified_params(data_keys)
+    "input contains unidentified params.\n"\
+    "Params received:\n#{data_keys}\n\n"\
+    "Params allowed:\n#{@params.keys}"
+  end
+
+  def error_unidentified_param(param_name)
+    "Supplied param_name '#{param_name}' "\
+    'does not exist for endpoint'
+  end
+
+  def error_bad_data_type(param_name, param_type, data)
+    "Data in column '#{param_name}' is not a valid '#{param_type}'.\n"\
+    "Data supplied was :#{data}"
+  end
+
+  def error_required_param_blank(param_name)
+    'No data supplied for column '\
+    "'#{param_name}', column is not optional."
   end
 end

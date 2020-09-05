@@ -4,6 +4,7 @@ module StringHelper
   module_function
 
   def string_can_be_coerced_to_class?(string, type)
+    type = type.capitalize
     case type
     when 'String'
       string_is_valid_string?(string)
@@ -40,15 +41,21 @@ module StringHelper
   end
 
   def string_is_valid_float?(string)
-    Float(string)
-    true
+    if ['0.0', '0'].include?(string)
+      true
+    else
+      !Float(string).zero?
+    end
   rescue StandardError
     false
   end
 
   def string_is_valid_integer?(string)
-    Integer(string)
-    true
+    if string == '0'
+      true
+    else
+      !Integer(string).zero?
+    end
   rescue StandardError
     false
   end
