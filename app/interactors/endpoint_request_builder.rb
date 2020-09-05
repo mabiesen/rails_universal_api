@@ -41,9 +41,9 @@ class EndpointRequestBuilder
   # validation occurs at the parameter collection and individual parameter level
   def validate_hash_inputs(data_hash)
     data_hash = data_hash.stringify_keys
-    all_keys_in_params = data_hash.keys.all? do |k| 
-                           @params.key?(k)
-                         end
+    all_keys_in_params = data_hash.keys.all? do |k|
+      @params.key?(k)
+    end
     raise error_unidentified_params(data_hash.keys) unless all_keys_in_params
 
     @params.each do |key, _|
@@ -103,7 +103,7 @@ class EndpointRequestBuilder
 
   def error_unidentified_param(param_name)
     "Supplied param_name '#{param_name}' "\
-    "does not exist for endpoint"
+    'does not exist for endpoint'
   end
 
   def error_bad_data_type(param_name, param_type, data)
@@ -112,8 +112,7 @@ class EndpointRequestBuilder
   end
 
   def error_required_param_blank(param_name)
-    "No data supplied for column "\
+    'No data supplied for column '\
     "'#{param_name}', column is not optional."
   end
-
 end

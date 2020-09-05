@@ -41,7 +41,7 @@ module StringHelper
   end
 
   def string_is_valid_float?(string)
-    if ['0.0','0'].include?(string)
+    if ['0.0', '0'].include?(string)
       true
     else
       !Float(string).zero?
