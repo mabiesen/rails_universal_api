@@ -14,7 +14,7 @@
       <img src="./assets/0.12.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-09-04T19:38:23-05:00">2020-09-04T19:38:23-05:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-09-04T19:43:15-05:00">2020-09-04T19:43:15-05:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  94.17%
+  93.87%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         24.29
+         24.24
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>309</b> relevant lines,
+    <b>310</b> relevant lines,
     <span class="green"><b>291</b> lines covered</span> and
-    <span class="red"><b>18</b> lines missed. </span>
+    <span class="red"><b>19</b> lines missed. </span>
     (<span class="green">
-  94.17%
+  93.87%
 </span>
 )
   </div>
@@ -138,12 +138,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#d5dac9f85f1abb4d637b908d89771cde71fea467" class="src_link" title="app/lib/string_helper.rb">app/lib/string_helper.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">80.56 %</td>
-            <td class="cell--number">74</td>
-            <td class="cell--number">36</td>
+            <td class="red strong cell--number t-file__coverage">78.38 %</td>
+            <td class="cell--number">77</td>
+            <td class="cell--number">37</td>
             <td class="cell--number">29</td>
-            <td class="cell--number">7</td>
-            <td class="cell--number">8.53</td>
+            <td class="cell--number">8</td>
+            <td class="cell--number">8.49</td>
             
           </tr>
         
@@ -650,14 +650,14 @@
     <span class="group_name">Libraries</span>
     (<span class="covered_percent">
       <span class="yellow">
-  89.61%
+  88.46%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         8.05
+         8.04
        </span>
     </span> hits/line
     )
@@ -670,11 +670,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>77</b> relevant lines,
+    <b>78</b> relevant lines,
     <span class="green"><b>69</b> lines covered</span> and
-    <span class="red"><b>8</b> lines missed. </span>
+    <span class="red"><b>9</b> lines missed. </span>
     (<span class="yellow">
-  89.61%
+  88.46%
 </span>
 )
   </div>
@@ -710,12 +710,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#d5dac9f85f1abb4d637b908d89771cde71fea467" class="src_link" title="app/lib/string_helper.rb">app/lib/string_helper.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">80.56 %</td>
-            <td class="cell--number">74</td>
-            <td class="cell--number">36</td>
+            <td class="red strong cell--number t-file__coverage">78.38 %</td>
+            <td class="cell--number">77</td>
+            <td class="cell--number">37</td>
             <td class="cell--number">29</td>
-            <td class="cell--number">7</td>
-            <td class="cell--number">8.53</td>
+            <td class="cell--number">8</td>
+            <td class="cell--number">8.49</td>
             
           </tr>
         
@@ -4539,8 +4539,8 @@
   <div class="header">
     <h3>app/lib/string_helper.rb</h3>
     <h4>
-      <span class="yellow">
-  80.56%
+      <span class="red">
+  78.38%
 </span>
 
       lines covered
@@ -4549,9 +4549,9 @@
     
 
     <div class="t-line-summary">
-      <b>36</b> relevant lines.
+      <b>37</b> relevant lines.
       <span class="green"><b>29</b> lines covered</span> and
-      <span class="red"><b>7</b> lines missed.</span>
+      <span class="red"><b>8</b> lines missed.</span>
     </div>
 
     
@@ -5151,18 +5151,18 @@
 
             
 
-            <code class="ruby">    Integer(string)</code>
+            <code class="ruby">    if string == &#39;0&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="55">
-            <span class="hits">2</span>
+          <li class="missed" data-hits="0" data-linenumber="55">
+            
             
 
             
 
-            <code class="ruby">    true</code>
+            <code class="ruby">      true</code>
           </li>
         </div>
       
@@ -5173,18 +5173,18 @@
 
             
 
-            <code class="ruby">  rescue StandardError</code>
+            <code class="ruby">    else</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="57">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="9" data-linenumber="57">
+            <span class="hits">9</span>
             
 
             
 
-            <code class="ruby">    false</code>
+            <code class="ruby">      !Integer(string).zero?</code>
           </li>
         </div>
       
@@ -5195,7 +5195,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -5206,155 +5206,23 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  rescue StandardError</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="60">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="7" data-linenumber="60">
+            <span class="hits">7</span>
             
 
             
 
-            <code class="ruby">  def coerce_string_to_class(string, type)</code>
+            <code class="ruby">    false</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="61">
-            
-            
-
-            
-
-            <code class="ruby">    case type</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="62">
-            
-            
-
-            
-
-            <code class="ruby">    when &#39;String&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="63">
-            
-            
-
-            
-
-            <code class="ruby">      string</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="64">
-            
-            
-
-            
-
-            <code class="ruby">    when &#39;Boolean&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="65">
-            
-            
-
-            
-
-            <code class="ruby">      string.casecmp?(&#39;true&#39;).zero?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="66">
-            
-            
-
-            
-
-            <code class="ruby">    when &#39;Date&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="67">
-            
-            
-
-            
-
-            <code class="ruby">      Date.parse(string)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="68">
-            
-            
-
-            
-
-            <code class="ruby">    when &#39;Float&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="69">
-            
-            
-
-            
-
-            <code class="ruby">      Float(string)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-            
-
-            
-
-            <code class="ruby">    when &#39;Integer&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="71">
-            
-            
-
-            
-
-            <code class="ruby">      string.to_i</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="72">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="73">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -5365,7 +5233,172 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="74">
+          <li class="never" data-hits="" data-linenumber="62">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="63">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def coerce_string_to_class(string, type)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="64">
+            
+            
+
+            
+
+            <code class="ruby">    case type</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="65">
+            
+            
+
+            
+
+            <code class="ruby">    when &#39;String&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="66">
+            
+            
+
+            
+
+            <code class="ruby">      string</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="67">
+            
+            
+
+            
+
+            <code class="ruby">    when &#39;Boolean&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="68">
+            
+            
+
+            
+
+            <code class="ruby">      string.casecmp?(&#39;true&#39;).zero?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="69">
+            
+            
+
+            
+
+            <code class="ruby">    when &#39;Date&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="70">
+            
+            
+
+            
+
+            <code class="ruby">      Date.parse(string)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="71">
+            
+            
+
+            
+
+            <code class="ruby">    when &#39;Float&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="72">
+            
+            
+
+            
+
+            <code class="ruby">      Float(string)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="73">
+            
+            
+
+            
+
+            <code class="ruby">    when &#39;Integer&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="74">
+            
+            
+
+            
+
+            <code class="ruby">      string.to_i</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="75">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="76">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="77">
             
             
 

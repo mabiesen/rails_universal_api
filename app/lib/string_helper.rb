@@ -51,8 +51,11 @@ module StringHelper
   end
 
   def string_is_valid_integer?(string)
-    Integer(string)
-    true
+    if string == '0'
+      true
+    else
+      !Integer(string).zero?
+    end
   rescue StandardError
     false
   end
