@@ -4,7 +4,7 @@ module StringHelper
   module_function
 
   def string_can_be_coerced_to_class?(string, type)
-    tye = type.capitalize
+    type = type.capitalize
     case type
     when 'String'
       string_is_valid_string?(string)
