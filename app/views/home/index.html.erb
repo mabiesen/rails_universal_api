@@ -15,7 +15,7 @@
      <% @endpoints.each do |endpoint| %>
        <tr>
          <% attributes.each do |attr| %>
-           <td><%= endpoint[attr] %> </td>
+           <td><%= endpoint[attr].is_a?(Hash) ? ap(endpoint[attr], plain: true).html_safe : endpoint[attr]%></td>
          <% end %>
        </tr>
      <% end %>
