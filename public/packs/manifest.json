@@ -1,17 +1,17 @@
 {
-  "application.js": "/packs/js/application-6b288648537417e766d2.js",
-  "application.js.map": "/packs/js/application-6b288648537417e766d2.js.map",
+  "application.js": "/packs/js/application-27addb33914fbea97cbd.js",
+  "application.js.map": "/packs/js/application-27addb33914fbea97cbd.js.map",
   "basic_datatable.js": "/packs/js/basic_datatable-346c3bc7548915b44980.js",
   "basic_datatable.js.map": "/packs/js/basic_datatable-346c3bc7548915b44980.js.map",
-  "bootstrap_custom.js": "/packs/js/bootstrap_custom-4e1cc7eb2c6c9cba3235.js",
-  "bootstrap_custom.js.map": "/packs/js/bootstrap_custom-4e1cc7eb2c6c9cba3235.js.map",
+  "bootstrap_custom.js": "/packs/js/bootstrap_custom-2b57c57bbf4c518f92f2.js",
+  "bootstrap_custom.js.map": "/packs/js/bootstrap_custom-2b57c57bbf4c518f92f2.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-6b288648537417e766d2.js"
+        "/packs/js/application-27addb33914fbea97cbd.js"
       ],
       "js.map": [
-        "/packs/js/application-6b288648537417e766d2.js.map"
+        "/packs/js/application-27addb33914fbea97cbd.js.map"
       ]
     },
     "basic_datatable": {
@@ -24,10 +24,10 @@
     },
     "bootstrap_custom": {
       "js": [
-        "/packs/js/bootstrap_custom-4e1cc7eb2c6c9cba3235.js"
+        "/packs/js/bootstrap_custom-2b57c57bbf4c518f92f2.js"
       ],
       "js.map": [
-        "/packs/js/bootstrap_custom-4e1cc7eb2c6c9cba3235.js.map"
+        "/packs/js/bootstrap_custom-2b57c57bbf4c518f92f2.js.map"
       ]
     },
     "fontawesome_custom": {
