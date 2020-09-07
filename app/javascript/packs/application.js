@@ -7,8 +7,10 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("datatables.net-bs4")
 
 import './boostrap_custom.js';
+import './basic_datatable.js'
 import './fontawesome_custom.js';
 import '../stylesheets/application';
 
