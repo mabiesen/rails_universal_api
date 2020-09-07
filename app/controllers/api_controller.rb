@@ -86,9 +86,14 @@ class ApiController < ApplicationController
   # hash of arguments to be used in client call
   # we are rejecting parameters which are either
   # 1) part of url path, 2) rails(httpie?) magicky idk what 'api' var
+  # we are also eliminating newlines which may arise from the UI
   def set_arguments
     exclusion_list = %w[client_tag api request_name]
     all_parameters = request.request_parameters
-    @arguments = all_parameters.reject { |param_name, _| exclusion_list.include?(param_name) }
+    applicable_params = all_parameters.reject { |param_name, value| exclusion_list.include?(param_name)}
+    @arguments = {}
+    applicable_params.each do |k, v|
+      @arguments[k] = v.chomp
+    end
   end
 end

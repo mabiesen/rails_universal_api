@@ -17,10 +17,10 @@
             <div class="form-group">
               <span class="label label-default" style="font-size: 16px;">
                 <% req_or_opt = params[param_name.to_s]['optional'] ? 'optional' : 'required' %>
-                <% qualified_name = "#{param_name.to_s.capitalize} (#{params[param_name]['type']})(#{req_or_opt})" %>
-                <%= qualified_name %>
+                <% qualifiers = "(#{params[param_name]['type']})(#{req_or_opt})" %>
+                <b><%= "#{param_name.to_s.capitalize} "%></b> <%= qualifiers %>
               </span>
-              <input class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
+              <input data-validationurl='<%= validate_param_url %>' class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
             </div>
           <% end %>
           <button type="submit" class="btn btn-primary">Submit</button>

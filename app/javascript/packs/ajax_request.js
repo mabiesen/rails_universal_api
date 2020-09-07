@@ -1,45 +1,22 @@
 document.addEventListener("turbolinks:load", () => { 
-  function sendAjaxRequest(method, urlpath, extra_params) {
-    var k = null;
-    $.ajax({
-      type: method.toUpperCase(),
-      url: url_path,
-      data: jQuery.param(extra_params),
-      dataType: 'json',
-      success: function(response){
-        if(response == 1){
-          var k = response;
-          console.log(response);
-         }
-       },
-       error: function(response){
-         console.log(response); 
-       }
-    });
-  }
 
   // this event will trigger the validation of the individual param
-  $("input").on('focusout', function(){
-    console.log($(this).attr['id']);
-    // get id of the input
+  $("input").on('keyup', function(){
+    var $element = $(this);
+    var input_name = $element.attr('name');
+    var input_text = $element.val();
+    var validation_url = $element.attr('data-validationurl')
+    var data_hash = {};
+    data_hash[input_name] = input_text;
 
-    //get data from the input
-
-    //get name of input
-
-    //get validation url from datatag
-
-    //send the post request, capture response
-
-    //on error set the color of the input to redo
-
-    $.post("demo_test_post.asp",
-    {
-      name: "Donald Duck",
-      city: "Duckburg"
-    },
-    function(data, status){
-      console.log("Data: " + data + "\nStatus: " + status);
-    });
+    $.post(validation_url,data_hash, function(data, status){
+      console.log("Data success: " + data['success']  + "\nData Error: " + data['error'] + "\nStatus: " + status);
+    })
+    .fail(function() {
+      $element.addClass('border-danger')
+    })
+    .done(function() {
+      $element.removeClass('border-danger');
+    })
   });
 });
