@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # UI related
 
   get '/', to: 'home#index'
+  get 'endpoint/:endpoint_id', to: 'home#endpoint'
+  get 'endpoint/:client_tag/:request_name', to: 'home#endpoint'
 
 
   # API related

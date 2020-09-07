@@ -1,0 +1,26 @@
+<div class='jumbotron'>
+  <h1 class="display-4">Endpoint: <%= @endpoint.name %></h1>
+  <h2 class="display-7"> Client: <%= @endpoint.client_tag.capitalize %></h2>
+</div>
+
+
+<% params = @endpoint.params %>
+<% url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
+<form action="<%= url %>" method="post">
+  <%  params.each do |param_name, _| %>
+    <div class="field">
+      <label for="<%= param_name.to_s %>">
+        <% req_or_opt = params[param_name.to_s]['optional'] ? 'optional' : 'required' %>
+        <% qualified_name = "#{param_name.to_s.capitalize} (#{params[param_name]['type']})(#{req_or_opt})" %>
+        <%= qualified_name %>
+      </label>
+      <br>
+      <input type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>">
+      <br>
+      <br>
+    </div>
+  <% end %>
+  <div class="actions">
+    <input type="submit" value="Submit">
+  </div>
+</form>
