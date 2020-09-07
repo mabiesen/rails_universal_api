@@ -3,6 +3,10 @@
   <h2 class="display-7"> Client: <%= @endpoint.client_tag.capitalize %></h2>
 </div>
 
+<div id="test_button" onClick="sendAjaxRequest('post','/validate_param/github/get_pull_requests',{'owner':'mabiesen'})">
+HERE
+</div>
+
 
 <% params = @endpoint.params %>
 <% url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
