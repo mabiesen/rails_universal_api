@@ -49,7 +49,7 @@ document.addEventListener("turbolinks:load", () => {
       params_response_data = data;
     })
     .done(function() {
-      $params_display.text(JSON.stringify(params_response_data['success']));
+      $params_display.text(JSON.stringify(params_response_data['success'], null, 2));
     });
 
   });
