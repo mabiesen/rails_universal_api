@@ -3,20 +3,16 @@
   <h2 class="display-7"> Client: <%= @endpoint.client_tag.capitalize %></h2>
 </div>
 
-<div id="test_button" onClick="sendAjaxRequest('post','/validate_param/github/get_pull_requests',{'owner':'mabiesen'})">
-HERE
-</div>
-
-
 <% params = @endpoint.params %>
-<% url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
+<% call_url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
+<% validate_param_url = "/validate_param/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6">
       <div class="container">
         <h2 >Submission Form </h2>
-        <form action="<%= url %>" method="post">
+        <form action="<%= call_url %>" method="post">
           <%  params.each do |param_name, _| %>
             <div class="form-group">
               <span class="label label-default" style="font-size: 16px;">
@@ -24,7 +20,7 @@ HERE
                 <% qualified_name = "#{param_name.to_s.capitalize} (#{params[param_name]['type']})(#{req_or_opt})" %>
                 <%= qualified_name %>
               </span>
-              <input class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>">
+              <input class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
             </div>
           <% end %>
           <button type="submit" class="btn btn-primary">Submit</button>

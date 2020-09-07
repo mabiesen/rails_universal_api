@@ -19,7 +19,8 @@ document.addEventListener("turbolinks:load", () => {
   }
 
   // this event will trigger the validation of the individual param
-  $("input").addEventListener('focusout', function(){
+  $("input").on('focusout', function(){
+    console.log($(this).attr['id']);
     // get id of the input
 
     //get data from the input
@@ -28,13 +29,17 @@ document.addEventListener("turbolinks:load", () => {
 
     //get validation url from datatag
 
+    //send the post request, capture response
+
+    //on error set the color of the input to redo
+
     $.post("demo_test_post.asp",
     {
       name: "Donald Duck",
       city: "Duckburg"
     },
     function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
+      console.log("Data: " + data + "\nStatus: " + status);
     });
   });
 });
