@@ -7,23 +7,55 @@
 <% params = @endpoint.params %>
 <% url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}.json" %>
 
-<div class="container">
-  <h2  class="display-7">Submission Form
+<div class="container-fluid">
   <div class="row">
     <div class="col-sm-6">
-      <form action="<%= url %>" method="post">
-        <%  params.each do |param_name, _| %>
-          <div class="form-group">
-            <span class="label label-default" style="font-size: 16px;">
-              <% req_or_opt = params[param_name.to_s]['optional'] ? 'optional' : 'required' %>
-              <% qualified_name = "#{param_name.to_s.capitalize} (#{params[param_name]['type']})(#{req_or_opt})" %>
-              <%= qualified_name %>
-            </span>
-            <input class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>">
+      <div class="container">
+        <h2 >Submission Form </h2>
+        <form action="<%= url %>" method="post" style="border: 1px solid black;">
+          <%  params.each do |param_name, _| %>
+            <div class="form-group">
+              <span class="label label-default" style="font-size: 16px;">
+                <% req_or_opt = params[param_name.to_s]['optional'] ? 'optional' : 'required' %>
+                <% qualified_name = "#{param_name.to_s.capitalize} (#{params[param_name]['type']})(#{req_or_opt})" %>
+                <%= qualified_name %>
+              </span>
+              <input class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>">
+            </div>
+          <% end %>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="col-sm-6">
+      <div class="container">
+        <h2>Path we'll hit</h2>
+        <div class="row" >
+          <div class="col-sm-12" style="min-height: 20px; background-color: #e9ecef;">
+            <%= @endpoint.url_path %>
           </div>
-        <% end %>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+        </div>
+        <h2>Params to send</h2>
+        <div class="row" >
+          <div class="col-sm-12" style="min-height: 30px; background-color: #e9ecef;">
+            <%= ap(@endpoint.params, plain: true).html_safe %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- End Of Primary Row -->
+  </div>
+
+  <div class='row'>
+    <div class="col-sm-12">
+      <h2>OUTPUT</h2>
+      <div style="min-height: 30px; background-color: #e9ecef;">
+        <%= ap(@endpoint.params, plain: true).html_safe %>
+      </div>
     </div>
   </div>
+
+  <!-- End Of Primary Container -->
 </div>
