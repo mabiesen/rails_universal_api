@@ -2,21 +2,55 @@ document.addEventListener("turbolinks:load", () => {
 
   // this event will trigger the validation of the individual param
   $("input").on('keyup', function(){
-    var $element = $(this);
-    var input_name = $element.attr('name');
-    var input_text = $element.val();
-    var validation_url = $element.attr('data-validationurl')
-    var data_hash = {};
-    data_hash[input_name] = input_text;
+    // input specific detail
+    var $this_input = $(this);
+    var input_name = $this_input.attr('name');
+    var input_text = $this_input.val();
+    var param_data_hash = {};
+    param_data_hash[input_name] = input_text;
 
-    $.post(validation_url,data_hash, function(data, status){
-      console.log("Data success: " + data['success']  + "\nData Error: " + data['error'] + "\nStatus: " + status);
+    // form related detail
+    var $urlpath_display = $('#urlpath_display');
+    var $params_display = $('#params_display');
+    var form_data = $('form').serialize();
+
+    // build urls
+    var client_tag = $this_input.attr('data-clienttag');
+    var request_name = $this_input.attr('data-requestname');
+    var validation_url = '/validate_param/' + client_tag + '/' + request_name;
+    var build_params_url = '/build_params/' + client_tag + '/' + request_name;
+    var build_urlpath_url = '/build_urlpath/' + client_tag + '/' + request_name;
+    
+    // call to validate individual param, set border color
+    $.post(validation_url,param_data_hash, function(data, status){
+      console.log("Validating Param. Data success: " + data['success']  + "\nData Error: " + data['error'] + "\nStatus: " + status);
     })
     .fail(function() {
-      $element.addClass('border-danger')
+      $this_input.addClass('border-danger');
     })
     .done(function() {
-      $element.removeClass('border-danger');
+      $this_input.removeClass('border-danger');
+    });
+
+    // call to build urlpath, place in appropriate box
+    var urlpath_response_data = '';
+    $.post(build_urlpath_url, form_data, function(data, status){
+      console.log("Building Urlpath. Data success: " + data['success']  + "\nData Error: " + data['error'] + "\nStatus: " + status);
+      urlpath_response_data = data;
     })
+    .done(function() {
+      $urlpath_display.text(urlpath_response_data['success']);
+    });
+
+    // call to build params
+    var params_response_data = '';
+    $.post(build_params_url, form_data, function(data, status){
+      console.log("Building Params. Data success: " + data['success']  + "\nData Error: " + data['error'] + "\nStatus: " + status);
+      params_response_data = data;
+    })
+    .done(function() {
+      $params_display.text(JSON.stringify(params_response_data['success']));
+    });
+
   });
 });
