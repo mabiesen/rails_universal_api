@@ -1,0 +1,30 @@
+<div class='jumbotron'> 
+  <h1 class="display-4">Available Endpoints</h1>
+</div>
+
+<% attributes = @endpoints.first.attributes.keys %>
+<table class='basic_datatable table table-striped table-bordered'>
+  <thead>
+    <tr>
+      <% attributes.each do |attr| %>
+        <th><%= attr %></th>
+      <% end %>
+     </tr>
+  </thead>
+  <tbody>
+     <% @endpoints.each do |endpoint| %>
+       <tr>
+         <% attributes.each do |attr| %>
+           <% if endpoint[attr].is_a?(Hash) %>
+             <% print_this = ap(endpoint[attr], plain: true) %>
+             <td>
+               <a tabindex="0" class="btn btn-md btn-info popover-dismiss" role="button" data-toggle="popover" data-trigger="focus" title="<%= attr %>" data-html="true" data-content="<%= print_this %>">Click to view <%= attr %></a>
+             </td>
+           <% else %>
+             <td><%= endpoint[attr] %></td>
+           <% end %>
+         <% end %>
+       </tr>
+     <% end %>
+  </tbody>
+</table>
