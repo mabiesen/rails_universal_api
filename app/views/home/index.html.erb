@@ -3,11 +3,11 @@
 <p> These are the endpoints: </p>
 
 <% attributes = @endpoints.first.attributes.keys %>
-<table>
+<table class='basic_datatable'>
   <thead>
     <tr>
       <% attributes.each do |attr| %>
-        <th><%= attr %><th>
+        <th><%= attr %></th>
       <% end %>
      </tr>
   </thead>
