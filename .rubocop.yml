@@ -2,7 +2,6 @@ require: rubocop-performance
 
 AllCops:
   TargetRubyVersion: 2.6
-
   Exclude:
     - 'db/**/*'
     - 'log/**/*'
@@ -13,6 +12,7 @@ AllCops:
     - 'features/**/*.rb'
     - 'lib/**/*.rake'
     - 'vendor/**/*'
+    - 'node_modules/**/*'
 
 Documentation:
   # Skips checking to make sure top level modules / classes have a comment.

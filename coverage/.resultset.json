@@ -3,8 +3,6 @@
     "coverage": {
       "/Users/mbiesen/git/mabiesen/rails_universal_api/app/helpers/application_helper.rb": {
         "lines": [
-          null,
-          null,
           1,
           null
         ]
@@ -642,7 +640,7 @@
         ]
       }
     },
-    "timestamp": 1599267045
+    "timestamp": 1599436437
   },
   "Unit Tests": {
     "coverage": {
