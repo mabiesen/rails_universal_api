@@ -1,0 +1,23 @@
+<p> Hello World</p>
+
+<p> These are the endpoints: </p>
+
+<% attributes = @endpoints.first.attributes.keys %>
+<table>
+  <thead>
+    <tr>
+      <% attributes.each do |attr| %>
+        <th><%= attr %><th>
+      <% end %>
+     </tr>
+  </thead>
+  <tbody>
+     <% @endpoints.each do |endpoint| %>
+       <tr>
+         <% attributes.each do |attr| %>
+           <td><%= endpoint[attr] %> </td>
+         <% end %>
+       </tr>
+     <% end %>
+  </tbody>
+</table>

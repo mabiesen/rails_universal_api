@@ -1,0 +1,24 @@
+{
+  "application.js": "/packs/js/application-2e69542164c620b05eed.js",
+  "application.js.map": "/packs/js/application-2e69542164c620b05eed.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-2e69542164c620b05eed.js"
+      ],
+      "js.map": [
+        "/packs/js/application-2e69542164c620b05eed.js.map"
+      ]
+    },
+    "fontawesome_custom": {
+      "js": [
+        "/packs/js/fontawesome_custom-2f02eb7545070375aa32.js"
+      ],
+      "js.map": [
+        "/packs/js/fontawesome_custom-2f02eb7545070375aa32.js.map"
+      ]
+    }
+  },
+  "fontawesome_custom.js": "/packs/js/fontawesome_custom-2f02eb7545070375aa32.js",
+  "fontawesome_custom.js.map": "/packs/js/fontawesome_custom-2f02eb7545070375aa32.js.map"
+}
