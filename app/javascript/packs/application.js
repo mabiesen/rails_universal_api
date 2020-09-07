@@ -8,6 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+import './boostrap_custom.js';
 import './fontawesome_custom.js';
 import '../stylesheets/application';
 
