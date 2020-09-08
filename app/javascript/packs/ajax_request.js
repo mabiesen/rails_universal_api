@@ -1,7 +1,34 @@
 document.addEventListener("turbolinks:load", () => { 
 
+  $("button.params_submit").on('click', function(event){
+    event.preventDefault();
+    var call_url = $(this).attr('data-callurl');
+    var $output = $('#output');
+    var form_data = $('form').serialize();
+
+    // clear output box and let user know what we're doing
+    $output.text("Fetching data. Time is " + new Date().toLocaleTimeString());
+
+    // no metter, either error or success, we print to the output box 
+    //retaining pass/fail convention for ease of troubleshooting
+    var response_data = '';
+    $.post(call_url, form_data, function(data, status){
+      console.log("Endpoint Called. \nResponse Status: " + status);
+      response_data = data;
+    })
+    .fail(function() {
+      $output.text(JSON.stringify(response_data, null, 2));
+    })
+    .done(function() {
+      $output.text(JSON.stringify(response_data, null, 2));
+    });
+
+    // take  the user to the output
+    $("html, body").animate({ scrollTop: $('#output').offset().top }, 1000);
+  });
+
   // this event will trigger the validation of the individual param
-  $("input").on('keyup', function(){
+  $("input.param_input").on('keyup', function(){
     // input specific detail
     var $this_input = $(this);
     var input_name = $this_input.attr('name');

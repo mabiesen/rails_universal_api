@@ -1,8 +1,8 @@
 {
-  "ajax_request.js": "/packs/js/ajax_request-081b89fa8a94957dec45.js",
-  "ajax_request.js.map": "/packs/js/ajax_request-081b89fa8a94957dec45.js.map",
-  "application.js": "/packs/js/application-3bdb6c6ba87424eceb5b.js",
-  "application.js.map": "/packs/js/application-3bdb6c6ba87424eceb5b.js.map",
+  "ajax_request.js": "/packs/js/ajax_request-f1e881623d3a7d5fda35.js",
+  "ajax_request.js.map": "/packs/js/ajax_request-f1e881623d3a7d5fda35.js.map",
+  "application.js": "/packs/js/application-71a3d125e9d467d71bd6.js",
+  "application.js.map": "/packs/js/application-71a3d125e9d467d71bd6.js.map",
   "basic_datatable.js": "/packs/js/basic_datatable-346c3bc7548915b44980.js",
   "basic_datatable.js.map": "/packs/js/basic_datatable-346c3bc7548915b44980.js.map",
   "bootstrap_custom.js": "/packs/js/bootstrap_custom-2b57c57bbf4c518f92f2.js",
@@ -10,18 +10,18 @@
   "entrypoints": {
     "ajax_request": {
       "js": [
-        "/packs/js/ajax_request-081b89fa8a94957dec45.js"
+        "/packs/js/ajax_request-f1e881623d3a7d5fda35.js"
       ],
       "js.map": [
-        "/packs/js/ajax_request-081b89fa8a94957dec45.js.map"
+        "/packs/js/ajax_request-f1e881623d3a7d5fda35.js.map"
       ]
     },
     "application": {
       "js": [
-        "/packs/js/application-3bdb6c6ba87424eceb5b.js"
+        "/packs/js/application-71a3d125e9d467d71bd6.js"
       ],
       "js.map": [
-        "/packs/js/application-3bdb6c6ba87424eceb5b.js.map"
+        "/packs/js/application-71a3d125e9d467d71bd6.js.map"
       ]
     },
     "basic_datatable": {

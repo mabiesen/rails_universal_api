@@ -11,7 +11,7 @@
     <div class="col-sm-6">
       <div class="container">
         <h2 >Submission Form </h2>
-        <form action="<%= call_url %>" method="post">
+        <form>
           <%  params.each do |param_name, _| %>
             <div class="form-group">
               <span class="label label-default" style="font-size: 16px;">
@@ -19,10 +19,10 @@
                 <% qualifiers = "(#{params[param_name]['type']})(#{req_or_opt})" %>
                 <b><%= "#{param_name.to_s.capitalize} "%></b> <%= qualifiers %>
               </span>
-              <input data-requestname='<%= @endpoint.name %>' data-clienttag='<%= @endpoint.client_tag %>' class='form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
+              <input data-requestname='<%= @endpoint.name %>' data-clienttag='<%= @endpoint.client_tag %>' class='param_input form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
             </div>
           <% end %>
-          <button id='form_submit' type="submit" class="btn btn-primary">Submit</button>
+          <button id='form_submit' type="submit" class="btn btn-primary params_submit" data-callurl='<%= call_url %>'>Submit</button>
         </form>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="row" >
           <div class="col-sm-12" style="min-height: 30px; background-color: #e9ecef;">
             <pre id='params_display'>
-              <%= ap(@endpoint.params, plain: true).html_safe %>
+              <%= ap({}, plain: true).html_safe %>
             </pre>
           </div>
         </div>
@@ -51,11 +51,15 @@
 
   <div class='row'>
     <div class="col-sm-12">
-      <h2>OUTPUT</h2>
-      <div style="min-height: 30px; background-color: #e9ecef;">
-        <pre id='output'>
-          <%= ap(@endpoint.params, plain: true).html_safe %>
-        </pre>
+      <div class='container-fluid'>
+        <h2>OUTPUT</h2>
+        <div class='row'>
+          <div class="col-sm-12" style="min-height: 30px; background-color: #e9ecef;">
+            <pre id='output'>
+              Make a submission! the output will appear here
+            </pre>
+          </div>
+        </div>
       </div>
     </div>
   </div>
