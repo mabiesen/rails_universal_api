@@ -3,7 +3,7 @@
 require 'awesome_print'
 
 class HomeController < ApplicationController
-  before_action :set_endpoint, only:  %i[endpoint_page]
+  before_action :set_endpoint, only: %i[endpoint_page]
 
   def index
     @endpoints = Endpoint.all
@@ -11,19 +11,19 @@ class HomeController < ApplicationController
 
   def endpoint_page
     render_home_request do
-      render("endpoint_page")
+      render('endpoint_page')
     end
   end
 
   private
 
   def set_endpoint
-    if !params[:endpoint_id].nil?
-      @endpoint = Endpoint.find(params[:endpoint_id])
-    else
-      @endpoint = Endpoint.where(name: params[:request_name])
+    @endpoint = if params[:endpoint_id].present?
+                  Endpoint.find(params[:endpoint_id])
+                else
+                  Endpoint.where(name: params[:request_name])
                           .where(client_tag: params[:client_tag]).first
-    end
+                end
   end
 
   # wraps requests that contain endpoint instantiation to insure 404 not found
