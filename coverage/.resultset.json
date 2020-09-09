@@ -1,19 +1,8 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/mbiesen/git/mabiesen/rails_universal_api/lib/tasks/rubocop.rake": {
-        "lines": [
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null
-        ]
-      }
     },
-    "timestamp": 1599642164
+    "timestamp": 1599643133
   },
   "Unit Tests": {
     "coverage": {

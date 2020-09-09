@@ -11,15 +11,26 @@
 
 ## About
 
+### What are the issues this project aims to tackle?
+
+* I want to be able to store endpoint detail in such a way that I only need to read the API documentation on rare occasion, rather than at the onset of every project.
+
+* I want to create and store filters that can be applied to API data, to obtain only the portion of the data that you need.  Some APIs return highly complex data that requires deep thought to comprehend and access the data you need, stored filters help to DRY up this time-costly concern. 
+
+* When I spin up a new hobby project, I want all of the API's I've previously encountered at my fingertips
+
+* When I communicate with an API I want the transaction to be intuitive, not some combination of url interpolation and parameters.  
+
+In short: I would like to make the developer experience of API usage/inclusion more intuitive.
+
 ### Features of Project
 
 Intended primarily to be run in a docker local to the project at hand.
 
-* be DRY in your code efforts across projects.  No longer are the days of including 30 gems, no longer should you be concerned that the gem will not update as rapidly as the api, or require dependencies you do not have
+* Avoid some of the problems and limitations of gems.  Gems often lack data filtering, gems provide an additional dependency layer (gem maintainer vs. api maintainer), etc.
 * use intuitively named urls to acommplish your goals.  No more concerns regarding interpolation: once the endpoint is discovered and submitted to the code base, you can strictly use traditional parameters
-* there is no longer a need to worry about nested hashes either.  Data submitted as a 'flat' hash can be converted to a nested object, provided that a body_template(json template) has been supplied to the endpoint
+* there is no longer a need to worry about formatting your data as a nested object.  Data submitted as a 'flat' hash can be converted to a nested object, provided that a body_template(json template) has been supplied to the endpoint
 * benefit from community contribution! As endpoints are discovered the clients and endpoints will be added to the codebase.  Filters-creation options for retrieved endpoint data coming soon.
-* utilize a fork of this project for your company, you can add all internal clients and identify endpoints.  Could assist in testing, troubleshooting, basic_understanding of a given API client, etc. 
 * use the database of endpoints to generate quick scripts of endpoint calls via curl, httpie, faraday, etc. (todo, this may be tricky due to varied permissioning)
 * use the UI to hit endpoints and receive real time feedback on validity (at least as regards class type expections)
 
@@ -61,22 +72,23 @@ From there you should be able to hit localhost:3003/
 The following JSON endpoints exist for this project:
 
 */list_endpoints* - returns a list of endpoints
+
 */call/:client_tag/:request_name* - call a given endpoint
+
 */validate_params/:client_tag/:request_name* - validate parameters for a given endpoint
+
 */validate_param/:client_tag/:request_name* - validate a single param for a given endpoint, intended for use in live form validation.
 
 #### Example - /list_endpoints
-Basic example:
+Basic example getting a list of all endpoints:
 ```
 http://localhost:3000/list_endpoints
 ```
-^^ fetches all endpoints
 
-Example filtering for endpoints with a client_tag 'like':
+Example filtering for endpoints with a client_tag 'like'. The following example returns clients with a name like 'git' (ie., endpoints with 'github' client tag are returned)::
 ```
 http://localhost:3000/list_endpoints client_tag:git
 ```
-^^ would return all endpoints with a client_tag containing the word 'git'
 
 Example filtering for endpoints with a name 'like':
 ```
@@ -87,20 +99,15 @@ http://localhost:3000/list_endpoints request_name:pull
 
 This route is the bread and butter of the application, it is how we reach out to external endpoints (github, facebook, etc).
 
-Basic example:
-```
-http://localhost:3000/call/github/get_pull_requests
-```
-^^ get all pull requests of any status from github
 
-Example filtering for status:
+Example getting pull requests that are in closed status:
 ```
-http://localhost:3000/call/github/get_pull_requests state:closed
+http://localhost:3000/call/github/get_pull_requests owner:mabiesen repo:rails_universal_apistate:closed
 ```
 
 #### Example - /validate_params/:client_tag/:request_name
 
-This route exists primarily as a development convenience, it provides a way to validate your parameters will work as expected.  It will also provide whollistic reivew of UI entries prior to form submission.
+This route exists primarily as a development convenience, it provides a way to validate your parameters will work as expected. 
 
 Basic example:
 ```
@@ -114,9 +121,9 @@ http://localhost:3000/validate_params/some_api_provider/some_reqeust  owner:mabi
 # would return error message indicating marcus is not a date
 ```
 
-#### Example(singular!) - /validate_param/:client_tag/:request_nam
+#### Example(singular!) - /validate_param/:client_tag/:request_name
 
-Same validations as /validate_params, but only one param is supplied at a time.
+Same validations as you would find in /validate_params, but only one param is supplied at a time.
 
 Primarily intended for UI live form validation.
 
@@ -132,19 +139,14 @@ cirlceci local execute
 
 Steps for adding clients
 1. add a /config/\<client_name\>.yml to store url information
-2. add a /config/initializers/\<client_name\>.rb to initialize your client.
-3. add the client to the client map in /app/models/endpoint.rb
-4. environment variables consumed by the initializer should be placed in /.env.local
+2. add a /config/initializers/endpoint_clients/\<client_name\>.rb to initialize your client. 
+4. environment variables consumed by the initializer should be placed in /.env.local, or sent to docker at runtime, or however you want to handle them.
 
 Steps for adding endpoints
 1. rails g migration adding_some_endpoint_name
 2. fill out the migration
-3. run rails db:migrate RAILS_ENV=development
-
-Versioning a new release should be done as follows:
-- Patch Update - Fix application related concerns
-- Minor Update - Change to an existing endpoint or client (Example: 0.7.122 -> 0.8.0)
-- Major Update - New/Delete endpoint or client, route addtions  (0.7.122 -> 1.0.0)
+3. Move the migration to db/migrate/endpoints
+4. run rails db:migrate RAILS_ENV=development to see your changes locally.
 
 NOTE: endpoints may not be added until a client has been added
 
@@ -167,9 +169,3 @@ Should have proper authentication.  API credentials should be stored better, pre
 TODO
 
 Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism will be created to allow one to generate http request scripts for use in other projects.
-
-#### UI Endpoint Execution
-
-TODO
-
-This UI would template out parameters in table format and offer AJAX data validation prior to data send.
