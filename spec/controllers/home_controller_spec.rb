@@ -17,4 +17,16 @@ describe HomeController, type: :controller do
     end
   end
 
+  describe '#endpoint_page' do
+    context 'when supplied an endpoint_id' do
+      it 'should render html' do
+        github_endpoint.save!
+        id = github_endpoint.reload.id
+        get :endpoint_page, params: {endpoint_id: id}
+        expect(response.status).to eq(200)
+        expect(response.content_type).to eq("text/html; charset=utf-8")
+      end
+    end
+  end
+
 end
