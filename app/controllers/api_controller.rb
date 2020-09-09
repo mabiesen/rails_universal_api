@@ -70,7 +70,6 @@ class ApiController < ApplicationController
       begin
         yield
       rescue StandardError => e
-        raise e
         render json: { error: e.to_s }, status: 500
       end
     end
