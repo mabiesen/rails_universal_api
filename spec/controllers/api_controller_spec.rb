@@ -133,7 +133,11 @@ describe ApiController, type: :controller do
   describe '#build_urlpath' do
     context 'when called' do
       it 'should return a urlpath with interpolated params' do
-
+        post "build_urlpath", params: {client_tag: 'github', request_name: 'test',  things: 'ehy'}
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)['success']).to be_a(String)
+        expect(JSON.parse(response.body)['success']).to eq('/test/ehy')
+        expect(JSON.parse(response.body)).not_to be(nil)
       end
     end
   end
