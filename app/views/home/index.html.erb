@@ -15,7 +15,13 @@
      <% @endpoints.each do |endpoint| %>
        <tr>
          <% attributes.each do |attr| %>
-           <% if endpoint[attr].is_a?(Hash) %>
+           <% if attr == 'name' %>
+            <td>
+              <a href='<%= "/home/endpoint/#{endpoint.id}" %>'>
+                <%= endpoint[attr] %>
+              </a>
+            </td>
+           <% elsif endpoint[attr].is_a?(Hash) %>
              <% print_this = ap(endpoint[attr], plain: true) %>
              <td>
                <a tabindex="0" class="btn btn-md btn-info popover-dismiss" role="button" data-toggle="popover" data-trigger="focus" title="<%= attr %>" data-html="true" data-content="<%= print_this %>">Click to view <%= attr %></a>

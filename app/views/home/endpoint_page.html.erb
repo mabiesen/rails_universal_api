@@ -1,0 +1,74 @@
+<div class='jumbotron'>
+  <h1 class="display-4">Endpoint: <%= @endpoint.name %></h1>
+  <h2 class="display-7"> Client: <%= @endpoint.client_tag.capitalize %></h2>
+  <a href='/' class='btn btn-primary' style="position: absolute; right: 20px; top: 20px;">
+    Back to Home
+  </a>
+</div>
+
+<% params = @endpoint.params %>
+<% call_url = "/call/#{@endpoint.client_tag}/#{@endpoint.name}" %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="container">
+        <h2 >Submission Form </h2>
+        <form>
+          <%  params.each do |param_name, _| %>
+            <div class="form-group">
+              <span class="label label-default" style="font-size: 16px;">
+                <% req_or_opt = params[param_name.to_s]['optional'] ? 'optional' : 'required' %>
+                <% qualifiers = "(#{params[param_name]['type']})(#{req_or_opt})" %>
+                <b><%= "#{param_name.to_s.capitalize} "%></b> <%= qualifiers %>
+              </span>
+              <input data-requestname='<%= @endpoint.name %>' data-clienttag='<%= @endpoint.client_tag %>' class='param_input form-control' type='text' id="<%= param_name.to_s %>" name="<%= param_name.to_s %>" <%= req_or_opt == 'required' ? 'required' : '' %>>
+            </div>
+          <% end %>
+          <button id='form_submit' type="submit" class="btn btn-primary params_submit" data-callurl='<%= call_url %>'>Submit</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="col-sm-6">
+      <div class="container">
+        <h2>Path we'll hit</h2>
+        <div class="row" >
+          <div id='urlpath_display' class="col-sm-12" style="min-height: 20px; background-color: #e9ecef;">
+            <%= @endpoint.url_path %>
+          </div>
+        </div>
+        <h2>Params to send</h2>
+        <div class="row" >
+          <div class="col-sm-12" style="min-height: 30px; background-color: #e9ecef;">
+            <pre id='params_display'>
+              <%= ap({}, plain: true).html_safe %>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- End Of Primary Row -->
+  </div>
+
+  <div class='row' style='margin-top: 20px;'>
+    <div class="col-sm-12">
+      <div class='container-fluid'>
+        <div id='download_endpoint_output' class='btn btn-primary' style="position: absolute; right: 20px; top: 0;">
+          Dowload Output
+        </div>
+        <h2>OUTPUT</h2>
+        <div class='row'>
+          <div class="col-sm-12" style="min-height: 30px; background-color: #e9ecef;">
+            <pre id='output'>
+              Make a submission! the output will appear here
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Of Primary Container -->
+</div>

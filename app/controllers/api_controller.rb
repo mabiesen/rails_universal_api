@@ -3,8 +3,9 @@
 require 'benchmark'
 
 class ApiController < ApplicationController
-  before_action :set_arguments, only: %i[call validate_params validate_param]
-  before_action :set_endpoint, only:  %i[call validate_params validate_param]
+  ENDPOINT_ROUTES = %i[call validate_params validate_param build_params build_urlpath].freeze
+  before_action :set_arguments, only: ENDPOINT_ROUTES
+  before_action :set_endpoint, only:  ENDPOINT_ROUTES
   before_action :set_endpoints, only: [:list_endpoints]
 
   # returns list of endpoints
@@ -35,6 +36,26 @@ class ApiController < ApplicationController
       erb = EndpointRequestBuilder.new(@endpoint)
       erb.validate_param(@arguments.keys.first.to_s, @arguments.values.first)
       render json: { success: 'Param looks like the right data type! good job!' }, status: 200
+    end
+  end
+
+  # obtain unvalidated params for hash
+  # will be used in UI of endpoint page
+  def build_params
+    render_endpoint_request do
+      erb = EndpointRequestBuilder.new(@endpoint)
+      urlpath = erb.extra_params(@arguments)
+      render json: { success: urlpath }, status: 200
+    end
+  end
+
+  # obtain unvalidated url path
+  # will be used in UI of endpoint page
+  def build_urlpath
+    render_endpoint_request do
+      erb = EndpointRequestBuilder.new(@endpoint)
+      extra_params = erb.formatted_url_path(@arguments)
+      render json: { success: extra_params }, status: 200
     end
   end
 
@@ -86,9 +107,14 @@ class ApiController < ApplicationController
   # hash of arguments to be used in client call
   # we are rejecting parameters which are either
   # 1) part of url path, 2) rails(httpie?) magicky idk what 'api' var
+  # we are also eliminating newlines which may arise from the UI
   def set_arguments
     exclusion_list = %w[client_tag api request_name]
     all_parameters = request.request_parameters
-    @arguments = all_parameters.reject { |param_name, _| exclusion_list.include?(param_name) }
+    applicable_params = all_parameters.reject { |param_name, _value| exclusion_list.include?(param_name) }
+    @arguments = {}
+    applicable_params.each do |k, v|
+      @arguments[k] = v.chomp
+    end
   end
 end

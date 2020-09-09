@@ -31,7 +31,7 @@ class EndpointRequestBuilder
 
     raise error_required_param_blank(param_name) if !optional && data.blank?
 
-    return if data.nil?
+    return if data.blank?
 
     raise error_bad_data_type(param_name, data_type, data) unless valid_data_for_type?(data, data_type)
   end

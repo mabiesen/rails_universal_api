@@ -119,6 +119,29 @@ describe ApiController, type: :controller do
     end
   end
 
+  describe '#build_params' do
+    context 'when called' do
+      it 'should return a hash, either empty or populated' do
+        post "build_params", params: {client_tag: 'github', request_name: 'test'}
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)['success']).to be_a(Hash)
+        expect(JSON.parse(response.body)).not_to be(nil)
+      end
+    end
+  end
+
+  describe '#build_urlpath' do
+    context 'when called' do
+      it 'should return a urlpath with interpolated params' do
+        post "build_urlpath", params: {client_tag: 'github', request_name: 'test',  things: 'ehy'}
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)['success']).to be_a(String)
+        expect(JSON.parse(response.body)['success']).to eq('/test/ehy')
+        expect(JSON.parse(response.body)).not_to be(nil)
+      end
+    end
+  end
+
   describe '#build_request' do
     context 'when called' do
       let(:controller_instance) { ApiController.new }
