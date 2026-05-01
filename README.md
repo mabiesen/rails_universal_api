@@ -13,15 +13,12 @@
 
 ### Features of Project
 
-Intended primarily to be run in a docker local to the project at hand.
+Intended primarily to be run in a docker local to the project at hand, this project is designed to database accessibility of commonly used endpoints.  There are several benefits to centralizing API usage:
 
-* be DRY in your code efforts across projects.  No longer are the days of including 30 gems, no longer should you be concerned that the gem will not update as rapidly as the api, or require dependencies you do not have
-* use intuitively named urls to acommplish your goals.  No more concerns regarding interpolation: once the endpoint is discovered and submitted to the code base, you can strictly use traditional parameters
-* there is no longer a need to worry about nested hashes either.  Data submitted as a 'flat' hash can be converted to a nested object, provided that a body_template(json template) has been supplied to the endpoint
-* benefit from community contribution! As endpoints are discovered the clients and endpoints will be added to the codebase.  Filters-creation options for retrieved endpoint data coming soon.
-* utilize a fork of this project for your company, you can add all internal clients and identify endpoints.  Could assist in testing, troubleshooting, basic_understanding of a given API client, etc. 
-* use the database of endpoints to generate quick scripts of endpoint calls via curl, httpie, faraday, etc. (todo, this may be tricky due to varied permissioning)
-* use the UI to hit endpoints and receive real time feedback on validity (at least as regards class type expections)
+* troubleshooting and mapping programs
+* using APIs across multiple projects without creating new clients all the time
+* using APIs without involving your project in the use of libraries which may or may not receive proper upgrades/maintenance
+* less potential for API credentials to be misplaced or made accessible to nefarious actors
 
 ## Ruby version
 
@@ -31,7 +28,7 @@ Intended primarily to be run in a docker local to the project at hand.
 
 ## Credentials Setup
 
-Pending a better methodology (coming very, very soon):
+Pending a better methodology:
 
 Check out /config/initializers/endpoint_clients.  This directory contains initializers for our endpoint clients (github, your-internal-server, etc).  Take a look at what environment variables are referenced and set them up and/or send them to the docker image at runtime.
 
@@ -150,12 +147,6 @@ NOTE: endpoints may not be added until a client has been added
 
 ## TODOS
 
-#### DRY Data filtering
-
-TODO
-
-Often when API responses are received they are filtered for specific logic required for business operations.  No one needs alllllllll of the information an API like  the github pull request api provides, so often we filter for what we need at the business layer.  But because this is occuring at the business layer within an application, these common filters are not usually granted cross-project applicability.
-
 #### Permissioning
 
 TODO
@@ -166,7 +157,7 @@ Should have proper authentication.  API credentials should be stored better, pre
 
 TODO
 
-Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism will be created to allow one to generate http request scripts for use in other projects.
+Some projects do not require the robustness that this service offers, and many developers prefer not to add an extra networking layer to their concerns.  A templating mechanism could be created to allow one to generate http request scripts for use in other projects.
 
 #### UI Endpoint Execution
 
